@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PasswordResetsTest < ActionDispatch::IntegrationTest
+class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
