@@ -9,12 +9,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_path
     assert_redirected_to login_url
   end
-  
-  setup do
-    @user = users(:one)
-  end
-  
+
   test "should get index" do
+    log_in_as(@user) 
     get users_url
     assert_response :success
   end
@@ -24,30 +21,42 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  # test "should create user" do
+  #   assert_difference('User.count') do
+  #     post users_url, params: { user: { email: @user.email, name: @user.name } }
+  #   end
+
+  #   assert_redirected_to user_url(User.last)
+  # end
+  
   test "should create user" do
     assert_difference('User.count') do
-      post users_url, params: { user: { email: @user.email, name: @user.name } }
+      post users_url, params: { user: { email: 'another_unique@email.com', name: 'Quiz', password: 'foobar' } }
     end
 
-    assert_redirected_to user_url(User.last)
+  assert_redirected_to user_url(User.last)
   end
 
   test "should show user" do
+    log_in_as(@user) 
     get user_url(@user)
     assert_response :success
   end
 
   test "should get edit" do
+    log_in_as(@user) 
     get edit_user_url(@user)
     assert_response :success
   end
 
   test "should update user" do
+    log_in_as(@user) 
     patch user_url(@user), params: { user: { email: @user.email, name: @user.name } }
     assert_redirected_to user_url(@user)
   end
 
   test "should destroy user" do
+    log_in_as(@user) 
     assert_difference('User.count', -1) do
       delete user_url(@user)
     end
