@@ -1,0 +1,207 @@
+---
+ja：
+  アクティブレコード：
+    エラー：
+      メッセージ：
+        record_invalid："バリエーションに失敗しました：％{エラー} "
+        restrict_dependent_destroy：
+          has_one："％{record}が存在しているので削除できません"
+          has_many："％{record}が存在しているので削除できません"
+  日付：
+    abbr_day_names：
+    - 日
+    - 月
+    - 火
+    - 水
+    - 木
+    - 金
+    - 土
+    abbr_month_names：
+    - 
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names：
+    - 日曜日
+    - 月曜日
+    - 火曜日
+    - 水曜日
+    - 木曜日
+    - 金曜日
+    - 土曜日
+    フォーマット：
+      デフォルト："％Y /％m /％d "
+      long："％Y年％m月％d日（％a）"
+      短い："％m /％d "
+    month_names：
+    - 
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    注文：
+    - ：年
+    - ：月
+    - ：日
+  日時：
+    distance_in_words：
+      about_x_hours：
+        1：約1時間
+        その他：約％{count}時間
+      about_x_months：
+        1：約1ヶ月
+        その他：約％{count}ヶ月
+      about_x_years：
+        1：約1年
+        その他：約％{count}年
+      almost_x_years：
+        1：1年弱
+        その他："％{count}年弱"
+      half_a_minute：30秒
+      less_than_x_minutes：
+        1：1分以内
+        その他："％{count}分未満"
+      less_than_x_seconds：
+        1：1秒以内
+        その他："％{count}秒未満"
+      over_x_years：
+        1：1年以上
+        その他："％{count}年以上"
+      x_days：
+        1：1日
+        その他："％{count}日"
+      x_minutes：
+        1：1分
+        その他："％{count}分"
+      x_months：
+        1：1ヶ月
+        その他："％{count}ヶ月"
+      x_years：
+        1：1年
+        その他："％{count}年"
+      x_seconds：
+        1：1秒
+        その他："％{count}秒"
+    プロンプト：
+      日：日
+      時：時
+      分：分
+      月：月
+      秒：秒
+      年：年
+  エラー：
+    フォーマット："％{attribute}％{message} "
+    メッセージ：
+      受け入れ：を受け入れてください
+      blank：を入力してください
+      プレゼント：は入力しないでください
+      確認：と％{属性}の入力が一致しません
+      空：を入力してください
+      equal_to：は％{count}にしてください
+      even：は偶数にしてください
+      除外：は予約されています
+      greater_than：は％{count}より大きな値にしてください
+      greater_than_or_equal_to：は％{count}以上の値にしてください
+      包含：は一覧にはありません
+      無効：は誤りな値です
+      less_than：は％{count} より小さい値にしてください
+      less_than_or_equal_to：は％{count}以下の値にしてください
+      model_invalid："バリエーションに失敗しました：％{エラー} "
+      not_a_number：は数値で入力してください
+      not_an_integer：は整数で入力してください
+      奇数：は奇数にしてください
+      必須：を入力してください
+      撮影：はすみに存在します
+      too_long：は％{count}文字以内で入力してください
+      too_short：は％{count}文字以上で入力してください
+      wrong_length：は％{count}文字で入力してください
+      other_than：は％{count}以外の値にしてください
+    テンプレート：
+      body：次の項目を確認してください
+      ヘッダー：
+        1つ：「％{model}にエラが発生しました」
+        その他："％{model}に％{count}個のエーラーが発しました"
+  ヘルパー：
+    選択：
+      プロンプト：選択してください
+    送信：
+      作成する：登録する
+      提出：保存する
+      更新：更新する
+  番号：
+    通貨：
+      フォーマット：
+        区切り文字："、"
+        形式："％n％u "
+        精度：0
+        セパレータ："。"
+        重要：偽
+        strip_insignificant_zeros：false
+        単位：円
+    フォーマット：
+      区切り文字："、"
+      精度：3
+      セパレータ："。"
+      重要：偽
+      strip_insignificant_zeros：false
+    人間：
+      decimal_units：
+        形式："％n％u "
+        単位：
+          十億：十億
+          百万：百万
+          千兆：千兆
+          千：千
+          兆：兆
+          ユニット：' '
+      フォーマット：
+        区切り文字：' '
+        精度：3
+        重要：true
+        strip_insignificant_zeros：true
+      storage_units：
+        形式："％n％u "
+        単位：
+          バイト：バイト
+          ギガバイト：GB
+          kb：KB
+          mb：MB
+          TB：TB
+          pb：PB
+          EB：EB
+    パーセンテージ：
+      フォーマット：
+        区切り文字：' '
+        形式："％n％"
+    精度：
+      フォーマット：
+        区切り文字：' '
+  サポート：
+    配列：
+      last_word_connector：、
+      two_words_connector：、
+      words_connector：、
+  時間：
+    am：午前
+    フォーマット：
+      デフォルト："％Y年％月％％日（％a）％時％分％％秒％％"
+      長い："％Y /％m /％d％H：％M "
+      短い："％m /％d％H：％M "
+    午後：午後
