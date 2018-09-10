@@ -68,19 +68,19 @@ Rails.application.configure do
   
   
   
-  # config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.delivery_method = :smtp
-  # host = 'kaneko-sample-app.herokuapp.com'
-  # config.action_mailer.default_url_options = { host: host }
-  # ActionMailer::Base.smtp_settings = {
-  #   :address        => 'smtp.sendgrid.net',
-  #   :port           => '587',
-  #   :authentication => :plain,
-  #   :user_name      => ENV['app106644172@heroku.com'],
-  #   :password       => ENV['96fwnxhz6021'],
-  #   :domain         => 'heroku.com',
-  #   :enable_starttls_auto => true
-  # }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  host = 'kaneko-sample-app.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['app106644172@heroku.com'],
+    :password       => ENV['96fwnxhz6021'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
   
   
   
