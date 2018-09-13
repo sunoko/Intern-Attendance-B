@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<% provide(:search_name, 'content search') %>
+<% provide(:search_name, 'ユーザー検索') %>
 <% provide(:path, user_path) %>
 <div class="row">
 <!--(中略)-->
@@ -7,7 +7,7 @@
     <%= render 'follow_form' if logged_in? %>
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <%= render 'users/search' %>  　<-- searchパーシャル呼出 -->
+      <%= render 'users/search' %>  　
       <ol class="microposts">
         <%= render @microposts %>
       </ol>

@@ -1,10 +1,10 @@
-<% provide(:search_name, 'content search') %>
+<% provide(:search_name) %>
 <% provide(:path, root_path) %>
   <div class="row">
 <!--(中略)-->
     <div class="col-md-8">
-      <h3>Micropost Feed</h3>
-      <%= render 'users/search' %> 　<-- searchパーシャル呼出 -->  
+      <h3>ユーザー一覧</h3>
+      <%= render 'users/search' %>  
       <%= render 'shared/feed' %>
     </div>
   </div>

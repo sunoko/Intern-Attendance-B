@@ -1,12 +1,12 @@
-<% provide(:title, 'All users') %>
-<% provide(:search_name, 'user search') %>
+<% provide(:title, '全てのユーザー') %>
+<% provide(:search_name, 'ユーザー検索') %>
 <% provide(:path, users_path) %>
 <h1>All users</h1>
 
 <%= will_paginate %>
 
 <ul class="users">
-  <%= render 'users/search' %> 　<-- searchパーシャル呼出 -->
+  <%= render 'users/search' %> 
   <%= render @users %>
 </ul>
 
