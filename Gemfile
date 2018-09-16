@@ -45,3 +45,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails-i18n'
 gem 'sendgrid-ruby'
+
+# ページネーション機能を追加する
+gem 'kaminari', '~> 0.17.0'
+
+gem 'kaminari-bootstrap', '~> 3.0.1'

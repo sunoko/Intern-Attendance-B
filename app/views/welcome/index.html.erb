@@ -1,0 +1,16 @@
+<div class="page-header">
+  <h1>単語一覧</h1>
+</div>
+<div class="list-group">
+  <% @words.each do |word| %>
+    <%= link_to(word, class: 'list-group-item') do %>
+      <h4 class="list-group-item-heading">
+        <%= word.word %>
+      </h4>
+      <p class="list-group-item-text">
+        <%= word.reading %>
+      </p>
+    <% end %>
+  <% end %>
+  <%= paginate @words %>
+</div>
