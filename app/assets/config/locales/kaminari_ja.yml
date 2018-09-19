@@ -1,8 +1,8 @@
-ja:
-  views:
-    pagination:
-      first: "&laquo; 最初"
-      last: "最後 &raquo;"
-      Previous Label: "&lsaquo; 前"
-      Next Label: "次 &rsaquo;"
-      truncate: "..."
+# ja:
+#   views:
+#     pagination:
+#       first: "&laquo; 最初"
+#       last: "最後 &raquo;"
+#       Previous Label: "&lsaquo; 前"
+#       Next Label: "次 &rsaquo;"
+#       truncate: "..."
