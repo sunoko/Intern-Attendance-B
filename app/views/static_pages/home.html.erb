@@ -19,7 +19,8 @@
   <%= render 'static_pages/user_logged_in' %>
 <% else %>
 
-  <div class="center jumbotron">
+  <!--<div class="center jumbotron">-->
+  <div>
     <h1>ボディメイキング</h1>
     <h1>コミュニティへようこそ</h1>
     <h2>
@@ -27,8 +28,9 @@
       <!--<a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>-->
       <!--sample application.-->
     </h2>
-
-    <%= link_to "サインアップはこちら", signup_path, class: "btn btn-lg btn-primary" %>
+    <div style="text-align:center;">
+      <%= link_to "サインアップはこちら", signup_path, class: "btn btn-lg btn-primary" %>
+    </div>
   </div>
 
   <body>
