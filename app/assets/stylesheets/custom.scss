@@ -57,6 +57,13 @@ p {
 }
 
 /* header */
+#header {
+	background-color: #0000FF;
+	}
+
+// header ul li {
+//   color: #fff;
+// }
 
 #logo {
   float: left;
@@ -292,5 +299,8 @@ span.picture {
 }
 
 body {background-image: url(asset-path('Body_M.jpg')); 
-      background-size: 1550px;
+      background-size: 1450px;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: right top;
 }
