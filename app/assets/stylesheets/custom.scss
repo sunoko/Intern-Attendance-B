@@ -57,13 +57,13 @@ p {
 }
 
 /* header */
-#header {
-	background-color: #0000FF;
+.navbar-inverse {
+	background-color: #65baad;
 	}
 
-// header ul li {
-//   color: #fff;
-// }
+.navbar-nav li a {
+  color: #000!important;
+}
 
 #logo {
   float: left;
@@ -87,11 +87,11 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #777;
+  color: #fff;
 }
 
 footer a {
-  color: #555;
+  color: #fff;
 }
 
 footer a:hover {
