@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def help
+  def link
   end
 
   def about

@@ -1,0 +1,14 @@
+<% provide(:title, "Link") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %> | kenko-portfolio</title>
+  </head>
+  <body>
+    <h1>リンク</h1>
+    <h2>管理人が通っていたジム</h2>
+    <%= link_to image_tag('/images/ito_gym_logo.jpg', { :border => '0'}) , 'http://www.itogym.com'%>
+    <h2>管理人が出場したコンテスト</h2>
+    <%= link_to image_tag('/images/best_body_j_logo.png', { :border => '0'}) , 'https://www.bestbodyjapan.com/'%>
+  </body>
+</html>
