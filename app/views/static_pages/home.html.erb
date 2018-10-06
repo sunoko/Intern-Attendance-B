@@ -24,7 +24,12 @@
   <div>
     <h1>勤怠システム</h1>
     <!--<div style="text-align:center;">-->
-      <%= link_to "サインアップはこちら", signup_path, class: "btn btn-lg btn-primary" %>
+      <P><%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %></P>
+    
+      <small>
+       <!--アカウント作成は <a href= "home/ec2-user/environment/sample_app/app/views/users/new.html.erb" target="_blank">こちら</a>-->
+       アカウント作成は<%= link_to "こちら",signup_path %>
+      </small>
     <!--</div>-->
   </div>
 

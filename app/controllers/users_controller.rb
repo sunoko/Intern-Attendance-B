@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     # 検索拡張機能として.search(params[:search])を追加    
     @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
   end
+  
   def new
     @user = User.new
   end
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      flash[:info] = "入力したアドレスにメールを送信しました。アカウントを有効にしてください"
+      # flash[:info] = "入力したアドレスにメールを送信しました。アカウントを有効にしてください"
       redirect_to user_url(@user)
     else
       render 'new'

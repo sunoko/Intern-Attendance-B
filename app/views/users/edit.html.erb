@@ -1,4 +1,4 @@
-<% provide(:title, "ユーザーの編集") %>
+<% provide(:title, "アカウント情報の更新") %>
 <h1>プロフィール更新</h1>
 
 <div class="row">
@@ -9,21 +9,21 @@
       <%= f.label :名前 %>
       <%= f.text_field :name, class: 'form-control' %>
 
-      <%= f.label :Eメール %>
+      <%= f.label :メースアドレス %>
       <%= f.email_field :email, class: 'form-control' %>
 
       <%= f.label :パスワード %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.label :password_confirmation, "パスワード確認" %>
+      <%= f.label :password_confirmation, "パスワードの確認" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <%= f.submit "更新", class: "btn btn-primary" %>
     <% end %>
 
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails">変更</a>
-    </div>
+    <!--<div class="gravatar_edit">-->
+    <!--  <%= gravatar_for @user %>-->
+    <!--  <a href="http://gravatar.com/emails">変更</a>-->
+    <!--</div>-->
   </div>
 </div>
