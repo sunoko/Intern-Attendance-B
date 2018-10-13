@@ -1,27 +1,73 @@
-<% provide(:title, @user.name) %>
-<% provide(:search_name) %>
-<% provide(:path, user_path) %>
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-  </aside>
-  <div class="col-md-8">
-    <%= render 'follow_form' if logged_in? %>
-    <% if @user.microposts.any? %>
-      <h3>ツイート (<%= @user.microposts.count %>)</h3>
-      <%= render 'users/search' %>  　
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
-    <% end %>
-  </div>
-</div>
+<!--<% provide(:title, @user.name) %>-->
+<!--<% provide(:search_name) %>-->
+<!--<% provide(:path, user_path) %>-->
+<!--<div class="row">-->
+<!--  <aside class="col-md-4">-->
+<!--    <section class="user_info">-->
+<!--      <h1>-->
+<!--        <%= gravatar_for @user %>-->
+<!--        <%= @user.name %>-->
+<!--      </h1>-->
+<!--    </section>-->
+<!--    <section class="stats">-->
+<!--      <%= render 'shared/stats' %>-->
+<!--    </section>-->
+<!--  </aside>-->
+<!--  <div class="col-md-8">-->
+<!--    <%= render 'follow_form' if logged_in? %>-->
+<!--    <% if @user.microposts.any? %>-->
+<!--      <h3>ツイート (<%= @user.microposts.count %>)</h3>-->
+<!--      <%= render 'users/search' %>  　-->
+<!--      <ol class="microposts">-->
+<!--        <%= render @microposts %>-->
+<!--      </ol>-->
+<!--      <%= will_paginate @microposts %>-->
+<!--    <% end %>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+<!DOCTYPE html>
+<html>
+<head>
+<title>基本的な表の作成</title>
+</head>
+<body>
+ <table border="1">
+    <tr>
+      <th>名前</th>
+      <th>年齢</th>
+    </tr>
+    <tr>
+      <td>田中</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <td>佐藤</td>
+      <td>42</td>
+    </tr>
+  </table>
+</body>
+</html>
