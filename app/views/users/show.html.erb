@@ -30,22 +30,22 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<title>基本的な表の作成</title>
-</head>
+
 <body>
- <table border="1">
-    <tr>
-      <th>名前</th>
-      <th>年齢</th>
+ <table border="1" width="1200">
+    <tr align="center">
+      <td><%= link_to "←", login_path %>2018年4月 時間管理表<%= link_to "→", login_path %></td>
+      <td>指定勤務時間 8:00</td>
+      <td colspan="3">7:50 基本時間</td>
+      <td>初日 04/01</td>
     </tr>
-    <tr>
-      <td>田中</td>
-      <td>27</td>
-    </tr>
-    <tr>
-      <td>佐藤</td>
-      <td>42</td>
+    <tr align="center">
+      <td>所属 <%= @user.affiliation %></td>
+      <td>氏名 <%= @user.name %></td>
+      <td>コード</td>
+      <td width="10"></td>
+      <td>出勤日数</td>
+      <td>締め 04/01</td>
     </tr>
   </table>
 </body>
