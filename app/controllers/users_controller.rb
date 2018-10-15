@@ -15,8 +15,22 @@ class UsersController < ApplicationController
     # @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
     
     
-　　@month = Time.now
+    if params[:piyo] == nil
+       # params[:piyo]が存在しない(つまりデフォルト時)
+       # ▼月初(今月の1日, 00:00:00)を取得します
+       @first_day = Time.current.beginning_of_month
+    else
+       # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
+       #  paramsの中身は"文字列"で送られてくるので注意
+       #  文字列を時間の型に直すときはparseメソッドを使うか、
+      # @first_day = Time.parse(params[:piyo])
+       #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
+       @first_day = params[:piyo].to_date 
+    end
+      # ▼月末(30or31日, 23:59:59)を取得します
+      @first_day.end_of_month
   end
+  
   def new
     @user = User.new
   end

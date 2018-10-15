@@ -1,28 +1,28 @@
-<!--<% provide(:title, @user.name) %>-->
-<!--<% provide(:search_name) %>-->
-<!--<% provide(:path, user_path) %>-->
+<!--<#% provide(:title, @user.name) %>-->
+<!--<#% provide(:search_name) %>-->
+<!--<#% provide(:path, user_path) %>-->
 <!--<div class="row">-->
 <!--  <aside class="col-md-4">-->
 <!--    <section class="user_info">-->
 <!--      <h1>-->
-<!--        <%= gravatar_for @user %>-->
-<!--        <%= @user.name %>-->
+<!--        <#%= gravatar_for @user %>-->
+<!--        <#%= @user.name %>-->
 <!--      </h1>-->
 <!--    </section>-->
 <!--    <section class="stats">-->
-<!--      <%= render 'shared/stats' %>-->
+<!--      <#%= render 'shared/stats' %>-->
 <!--    </section>-->
 <!--  </aside>-->
 <!--  <div class="col-md-8">-->
-<!--    <%= render 'follow_form' if logged_in? %>-->
-<!--    <% if @user.microposts.any? %>-->
-<!--      <h3>ツイート (<%= @user.microposts.count %>)</h3>-->
-<!--      <%= render 'users/search' %>  　-->
+<!--    <#%= render 'follow_form' if logged_in? %>-->
+<!--    <#% if @user.microposts.any? %>-->
+<!--      <h3>ツイート (<#%= @user.microposts.count %>)</h3>-->
+<!--      <%#= render 'users/search' %>  　-->
 <!--      <ol class="microposts">-->
-<!--        <%= render @microposts %>-->
+<!--        <%#= render @microposts %>-->
 <!--      </ol>-->
-<!--      <%= will_paginate @microposts %>-->
-<!--    <% end %>-->
+<!--      <%#= will_paginate @microposts %>-->
+<!--    <#% end %>-->
 <!--  </div>-->
 <!--</div>-->
 
@@ -34,7 +34,12 @@
 <body>
  <table border="1" width="1200">
     <tr align="center">
-      <td><%= link_to "←", login_path %>2018年4月 時間管理表<%= link_to "→", login_path %></td>
+      <td>
+        <%= link_to "←", user_path(piyo: @first_day.prev_month) %>
+        <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表
+        <%= link_to "→", user_path(piyo: @first_day.next_month) %>
+        
+      </td>
       <td>指定勤務時間 8:00</td>
       <td colspan="3">7:50 基本時間</td>
       <td>初日 04/01</td>
