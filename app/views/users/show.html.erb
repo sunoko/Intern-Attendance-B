@@ -42,7 +42,7 @@
       </td>
       <td>指定勤務時間 8:00</td>
       <td colspan="3">7:50 基本時間</td>
-      <td>初日 04/01</td>
+      <td>初日 <%= @first_day.month %>/<%= @first_day.day %></td>
     </tr>
     <tr align="center">
       <td>所属 <%= @user.affiliation %></td>
@@ -50,8 +50,50 @@
       <td>コード</td>
       <td width="10"></td>
       <td>出勤日数</td>
-      <td>締め 04/01</td>
+      <td>締め <%= @first_day.month %>/<%= Date.new(@first_day.year, @first_day.month, -1).day %></td>
     </tr>
-  </table>
+    </table> 
 </body>
+　
+　<br><br><br>
+　
+　<body>
+　  <table border="1" width="1200">
+      <tr align="center">
+        <td></td><td rowspan=”2″>曜日</td><td>出社</td><td>退社</td>
+      </tr>
+      
+      <tr align="center">
+        <td rowspan=”2″>日付</td><td></td><td>時</td><td>分</td><td></td><td>時</td><td>分</td><td></td>
+      </tr>
+    </table> 
+  </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ja">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--<title>テーブルの行をループで処理</title>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--  <table>-->
+<!--    <thead>-->
+<!--      <tr>-->
+<!--        <td>数字i</td>-->
+<!--        <td>数字i+2</td>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody id="tbodyID">-->
+<!--      <script type="text/javascript">-->
+<!--        for (var i = 1; i <= 20; i++) {-->
+<!--          document.write("<tr><td>", i, "</td>");-->
+<!--          document.write("<td>", i + 2,  "</td></tr>");-->
+<!--        }-->
+<!--      </script>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</body>-->
+<!--</html>-->
