@@ -1,33 +1,3 @@
-<!--<#% provide(:title, @user.name) %>-->
-<!--<#% provide(:search_name) %>-->
-<!--<#% provide(:path, user_path) %>-->
-<!--<div class="row">-->
-<!--  <aside class="col-md-4">-->
-<!--    <section class="user_info">-->
-<!--      <h1>-->
-<!--        <#%= gravatar_for @user %>-->
-<!--        <#%= @user.name %>-->
-<!--      </h1>-->
-<!--    </section>-->
-<!--    <section class="stats">-->
-<!--      <#%= render 'shared/stats' %>-->
-<!--    </section>-->
-<!--  </aside>-->
-<!--  <div class="col-md-8">-->
-<!--    <#%= render 'follow_form' if logged_in? %>-->
-<!--    <#% if @user.microposts.any? %>-->
-<!--      <h3>ツイート (<#%= @user.microposts.count %>)</h3>-->
-<!--      <%#= render 'users/search' %>  　-->
-<!--      <ol class="microposts">-->
-<!--        <%#= render @microposts %>-->
-<!--      </ol>-->
-<!--      <%#= will_paginate @microposts %>-->
-<!--    <#% end %>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -50,7 +20,8 @@
       <td>コード</td>
       <td width="10"></td>
       <td>出勤日数</td>
-      <td>締め <%= @first_day.month %>/<%= Date.new(@first_day.year, @first_day.month, -1).day %></td>
+      <!--<%= last_day = Date.new(@first_day.year, @first_day.month, -1).day %>-->
+      <td>締め <%= @first_day.month %>/<%= last_day %></td>
     </tr>
     </table> 
 </body>
@@ -60,12 +31,29 @@
 　<body>
 　  <table border="1" width="1200">
       <tr align="center">
-        <td></td><td rowspan=”2″>曜日</td><td>出社</td><td>退社</td>
+        <td rowspan="2">日付</td>
+        <td rowspan="2">曜日</td>
+        <td colspan="3">出社</td>
+        <td colspan="3">退社</td>
+        <td rowspan="2">滞在時間</td>
+        <td rowspan="2">備考</td>
+        <td rowspan="2">残業指示</td>
+        <td rowspan="2">残業指示者</td>
       </tr>
       
       <tr align="center">
-        <td rowspan=”2″>日付</td><td></td><td>時</td><td>分</td><td></td><td>時</td><td>分</td><td></td>
+        <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
+
+      <tr align="center">
+        <!--<p>-->
+        <!--<%= dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>-->
+        <!--<%= for day in 1..dayloop do%>-->
+        <td><%= @first_day.month %>/<%= dayloop %></td><td></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10"></td><td></td><td></td><td></td><td></td>
+        <!--<% end %>-->
+        <!--</p>-->
+      </tr>
+      
     </table> 
   </body>
 </html>
@@ -87,12 +75,12 @@
 <!--      </tr>-->
 <!--    </thead>-->
 <!--    <tbody id="tbodyID">-->
-<!--      <script type="text/javascript">-->
-<!--        for (var i = 1; i <= 20; i++) {-->
-<!--          document.write("<tr><td>", i, "</td>");-->
-<!--          document.write("<td>", i + 2,  "</td></tr>");-->
-<!--        }-->
-<!--      </script>-->
+      <!--<script type="text/javascript">-->
+      <!--  for (var i = 1; i <= 20; i++) {-->
+      <!--    document.write("<tr><td>", i, "</td>");-->
+      <!--    document.write("<td>", i + 2,  "</td></tr>");-->
+      <!--  }-->
+      <!--</script>-->
 <!--    </tbody>-->
 <!--  </table>-->
 <!--</body>-->
