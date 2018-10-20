@@ -45,43 +45,19 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-      <tr align="center">
-        <!--<p>-->
+      <!--<td><#%= @first_day.month %>/<%#= 1 %></td><td></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10"></td><td></td><td></td><td></td><td></td>-->
+
         <!--<%= dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>-->
+        <!--<%= youbi = %w[日 月 火 水 木 金 土] %>-->
         <!--<%= for day in 1..dayloop do%>-->
-        <td><%= @first_day.month %>/<%= dayloop %></td><td></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10"></td><td></td><td></td><td></td><td></td>
+        <tr align="center">
+          <td><%= @first_day.month %>/<%= day %></td><td><%= youbi[@first_day.prev_week] %></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10">
+          </td><td></td><td></td><td></td><td></td>
+        </tr>
         <!--<% end %>-->
-        <!--</p>-->
-      </tr>
+        
+      
       
     </table> 
   </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="ja">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--<title>テーブルの行をループで処理</title>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--  <table>-->
-<!--    <thead>-->
-<!--      <tr>-->
-<!--        <td>数字i</td>-->
-<!--        <td>数字i+2</td>-->
-<!--      </tr>-->
-<!--    </thead>-->
-<!--    <tbody id="tbodyID">-->
-      <!--<script type="text/javascript">-->
-      <!--  for (var i = 1; i <= 20; i++) {-->
-      <!--    document.write("<tr><td>", i, "</td>");-->
-      <!--    document.write("<td>", i + 2,  "</td></tr>");-->
-      <!--  }-->
-      <!--</script>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--</body>-->
-<!--</html>-->
