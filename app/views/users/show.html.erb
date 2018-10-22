@@ -45,15 +45,13 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-      <!--<td><#%= @first_day.month %>/<%#= 1 %></td><td></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10"></td><td></td><td></td><td></td><td></td>-->
-
         <!--<%= dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>-->
         <!--<%= youbi = %w[日 月 火 水 木 金 土] %>-->
-        <!--<%= for day in 1..dayloop do%>-->
-        <tr align="center">
-          <td><%= @first_day.month %>/<%= day %></td><td><%= youbi[@first_day.prev_week] %></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10">
+        <!--<%= for temp_day in 1..dayloop do%>-->
+        <tr align="center" height="50">
+          <td><%= @first_day.month %>/<%= temp_day %></td><td><%= youbi [@first_day.change(day: temp_day) .wday] %></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10">
           </td><td></td><td></td><td></td><td></td>
-        </tr>
+      </tr>
         <!--<% end %>-->
         
       
