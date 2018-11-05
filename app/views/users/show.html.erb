@@ -4,10 +4,10 @@
 <body>
  <table border="1" width="1200">
     <tr align="center">
-      <td>
-        <%= link_to "←", user_path(piyo: @first_day.prev_month) %>
+      <td height="45">
+        <%= link_to "←", user_path(piyo: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表
-        <%= link_to "→", user_path(piyo: @first_day.next_month) %>
+        <%= link_to "→", user_path(piyo: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         
       </td>
       <td>指定勤務時間 8:00</td>
@@ -45,14 +45,21 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-        <!--<%= dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>-->
-        <!--<%= youbi = %w[日 月 火 水 木 金 土] %>-->
-        <!--<%= for temp_day in 1..dayloop do%>-->
+        <% dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>
+        <% youbi = %w[日 月 火 水 木 金 土] %>
+        <% for temp_day in 1..dayloop do%>
         <tr align="center" height="50">
-          <td><%= @first_day.month %>/<%= temp_day %></td><td><%= youbi [@first_day.change(day: temp_day) .wday] %></td><td></td><td></td><td width="130"></td><td></td><td></td><td width="10">
-          </td><td></td><td></td><td></td><td></td>
+          <td><%= @first_day.month %>/<%= temp_day %></td>
+          <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
+          <td></td>
+          <td></td>
+          <td width="130">＜%= link_to "出社", user_path(piyo: @first_day.prev_month), class: "btn btn-primary" %＞</td>
+          <td></td>
+          <td></td>
+          <td width="10"></td>
+          <td></td><td></td><td></td><td></td>
       </tr>
-        <!--<% end %>-->
+        <% end %>
         
       
       
