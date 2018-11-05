@@ -53,7 +53,11 @@
           <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
           <td></td>
           <td></td>
-          <td width="130">＜%= link_to "出社", user_path(piyo: @first_day.prev_month), class: "btn btn-primary" %＞</td>
+          <td width="130">
+            <% if Time.current.day == temp_day %>
+            <%= link_to "出 社", user_path(piyo: @first_day.prev_month),style:"color:white", class: "btn btn-primary" %>
+            <% end  %>
+          </td>
           <td></td>
           <td></td>
           <td width="10"></td>
