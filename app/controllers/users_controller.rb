@@ -15,9 +15,9 @@ class UsersController < ApplicationController
     # @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
     
     # byebug
-    if params[:flag] == "true"
-      byebug
-      @atten_times = Atten_time.new(user_id: @user.id, arrival_time: Date.current)
+    if params[:flag] == "arrival_flag"
+      # byebug
+      @atten_times = Attendance.new(user_id: @user.id, arrival: DateTime.now)
       @atten_times.save
     end
     

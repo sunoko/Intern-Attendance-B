@@ -55,8 +55,7 @@
           <td></td>
           <td width="130">
             <% if Time.current.day == temp_day %>
-              <!--<%# @flag = "true" %>-->
-              <%= link_to "出 社", user_path(flag: true), style:"color:white", class: "btn btn-primary" %>
+              <%= link_to "出 社", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
             <% end  %>
           </td>
           <td></td>
