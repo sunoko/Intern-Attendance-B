@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     # 検索拡張機能として.search(params[:search])を追加    
     # @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
+    
     if @flag != nil 
       @atten_times = Atten_time.new(user_id: @user.id, arrival_time: Date.current)
       @atten_times.save
