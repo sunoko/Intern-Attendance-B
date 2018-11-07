@@ -12,10 +12,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @attendance = Attendance.find(@user.id)
+    
     # 検索拡張機能として.search(params[:search])を追加    
     # @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
     
-    # byebug
+    
     if params[:flag] == "arrival_flag"
       # byebug
       @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
@@ -36,6 +37,12 @@ class UsersController < ApplicationController
     end
       # ▼月末(30or31日, 23:59:59)を取得します
       @first_day.end_of_month
+      
+      #特定idデータにおける一ヶ月分の出退勤情報を抽出
+      serch_date = @first_day
+      byebug
+      @attendance = Item.where(created_at: serch_date.in_time_zone.all_month)
+      # byebug
   end
   
   def new
