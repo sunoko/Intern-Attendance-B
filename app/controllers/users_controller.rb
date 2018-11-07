@@ -11,14 +11,15 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @attendance = Attendance.find(@user.id)
     # 検索拡張機能として.search(params[:search])を追加    
     # @microposts = @user.microposts.paginate(page: params[:page]).search(params[:search])
     
     # byebug
     if params[:flag] == "arrival_flag"
       # byebug
-      @atten_times = Attendance.new(user_id: @user.id, arrival: DateTime.now)
-      @atten_times.save
+      @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
+      @attendance.save
     end
     
     if params[:piyo] == nil
