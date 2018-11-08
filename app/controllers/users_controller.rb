@@ -23,6 +23,10 @@ class UsersController < ApplicationController
       @attendance.save
     end
     
+    if params[:flag] == "departure_flag"
+      
+    end
+    
     if params[:piyo] == nil
        # params[:piyo]が存在しない(つまりデフォルト時)
        # ▼月初(今月の1日, 00:00:00)を取得します
@@ -36,12 +40,17 @@ class UsersController < ApplicationController
        @first_day = params[:piyo].to_date 
     end
       # ▼月末(30or31日, 23:59:59)を取得します
-      @first_day.end_of_month
+       @last_day = @first_day.end_of_month.day
       
       #特定idデータにおける一ヶ月分の出退勤情報を抽出
-      serch_date = @first_day
-      byebug
-      @attendance = Item.where(created_at: serch_date.in_time_zone.all_month)
+      
+      # 次月の初日未満（初日は含まない）
+      # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
+      to = Date.today.next_month.beginning_of_month
+      
+      #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
+      @attendance = Attendance.where(created_at: @first_day...to)
+
       # byebug
   end
   
