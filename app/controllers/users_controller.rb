@@ -13,22 +13,17 @@ class UsersController < ApplicationController
   @user = User.find(params[:id])
   @attendance = Attendance.find(@user.id)
 
-    if params[:flag] == "arrival_flag"
+    if params[:flag] == "arrival_flag" #出勤ボタンを押下
       # byebug
       @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
       @attendance.save
     end
     
-    if params[:flag] == "departure_flag"
-      # @attendance = Attendance.where(@attendance.id = ?, params[:id]).update_all(:departure: DateTime.now)
-      #       users = User.where('age = ?', 2).update_all(:name => 'ZZZ')
-      # @attendance.save
+    if params[:flag] == "departure_flag" #退勤ボタンを押下
       start_today = Time.zone.today.beginning_of_day
-      end_today = Time.zone.today.end_of_day      
-     #退勤時イベントでの上書きするAttendanceのidを取得
+        end_today = Time.zone.today.end_of_day      
+     #退勤時イベントでの上書きするAttendanceのidカラムを取得
       @update_id = Attendance.where(arrival: start_today...end_today)
-      # byebug
-      # @article = Attendance.find(id: @update_id) 
       # byebug
       @update_id.update(departure: DateTime.now)
       byebug
@@ -48,20 +43,12 @@ class UsersController < ApplicationController
     end
   # ▼月末(30or31日, 23:59:59)を取得します
   @last_day = @first_day.end_of_month.day
-    
-  #特定idデータにおける一ヶ月分の出退勤情報を抽出
-  
+
   # 次月の初日未満（初日は含まない）
   # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
   @to = Date.today.next_month.beginning_of_month
-  # start_today = Time.zone.today.beginning_of_day
-  #   end_today = Time.zone.today.end_of_day
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(arrival: @first_day...@to)
-  
-  #退勤時イベントでの上書きするAttendanceのidを取得
-  # @update_id = Attendance.where(arrival: start_today...end_today)
-  # byebug
   end
   
   def new
