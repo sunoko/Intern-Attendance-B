@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
   
+  # get '/users/:id/:update_id/:departure_flag' => 'users#show'
+  
   resources :users do
     member do
       get :following, :followers

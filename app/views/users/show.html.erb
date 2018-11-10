@@ -56,12 +56,12 @@
           <td></td>
           <td width="130">
             <% if Time.current.day == temp_day %>
-              <% if @attendance.where(arrival: Time.current.all_day) == nil %>  <%# 出社情報がモデル内に存在しているか判定 %>
+              <% if @attendance.find_by(arrival: @first_day...@to) == nil %>  <%# 出社情報がモデル内に存在しているか判定 %>
                 <%= link_to "出 社", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
               <% else %>
-                <!--<%# @today_attendance = @attendance.where(arrival: Time.current.all_day).id %>-->
-                <!--<%#= link_to "退 社", user_path(flag: "departure_flag" edit_id: today_attendance.id), style:"color:white", class: "btn btn-primary" %>-->
+                <%# @today_attendance_id = update_id: @attendance.where(arrival: Time.current.all_day).id %>
                 <%= link_to "退 社", user_path(flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
+                <%#= link_to "退 社", user_path(@today_attendance, style:"color:white", class: "btn btn-primary" %>
               <% end %>
             <% end %>
           </td>
