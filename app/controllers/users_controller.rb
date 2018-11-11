@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
   @user = User.find(params[:id])
   @attendance = Attendance.find(@user.id)
+  @y_m_d = Date.today
 
     if params[:flag] == "arrival_flag" #出勤ボタンを押下
       # byebug
@@ -26,13 +27,13 @@ class UsersController < ApplicationController
       @update_id = Attendance.where(arrival: start_today...end_today)
       # byebug
       @update_id.update(departure: DateTime.now)
-      byebug
+      #byebug
     end
     
     if params[:piyo] == nil
        # params[:piyo]が存在しない(つまりデフォルト時)
        # ▼月初(今月の1日, 00:00:00)を取得します
-       @first_day = Time.current.beginning_of_month
+       @first_day = DateTime.current.beginning_of_month
     else
        # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
        #  paramsの中身は"文字列"で送られてくるので注意
@@ -46,9 +47,11 @@ class UsersController < ApplicationController
 
   # 次月の初日未満（初日は含まない）
   # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
-  @to = Date.today.next_month.beginning_of_month
+  # @to = Date.today.next_month.beginning_of_month
+  @to = DateTime.current.next_month.beginning_of_month
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(arrival: @first_day...@to)
+  # @attendance_today = Attendance.where(arrival: @first_day...@to)
   end
   
   def new
@@ -61,7 +64,7 @@ class UsersController < ApplicationController
     # debugger
     # if @user.save
     #   @user.send_activation_email
-    #   flash[:info] = "入力したアドレスにメールを送信しました。アカウントを有効にしてください"
+    #   flash[:info] = "入力したアドレスに��ールを送信しました。アカウントを有効にしてください"
     #   redirect_to user_url(@user)
     # else
       render 'new'

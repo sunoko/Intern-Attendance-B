@@ -55,13 +55,12 @@
           <td></td>
           <td></td>
           <td width="130">
-            <% y_m_d = Date.today %>
-            <% y_m_d = y_m_d.year,y_m_d.month,y_m_d.day %>
-            <% comparison = Date.today.year,Date.today.month,temp_day %>
-            <% if y_m_d == comparison %> <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
-              <% if @attendance.find_by(arrival: @first_day...@to) == nil %>  <%# 出勤情報がモデル内に存在しているか判定 %>
+            <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+            <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+            <% if @y_m_d == comparison_date %> <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
+              <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                 <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
-              <% elsif @attendance.find_by(departure: @first_day...@to) == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>
+              <% elsif @attendance.where(departure: range).empty? %>　<%# 退勤情報がモデル内に存在しているか判定 %>
                 <%= link_to "退 勤", user_path(flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
               <% else %>
                 <%# 退勤ボタンを押下済みならボタンは非表示 %>
