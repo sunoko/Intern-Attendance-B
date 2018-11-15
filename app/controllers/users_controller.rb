@@ -40,11 +40,11 @@ class UsersController < ApplicationController
        #  文字列を時間の型に直すときはparseメソッドを使うか、
       # @first_day = Time.parse(params[:piyo])
        #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
-       @first_day = params[:piyo].to_date 
+       @first_day = params[:piyo].to_date
     end
   # ▼月末(30or31日, 23:59:59)を取得します
   @last_day = @first_day.end_of_month.day
-
+  #byebug
   # 次月の初日未満（初日は含まない）
   # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
   # @to = Date.today.next_month.beginning_of_month

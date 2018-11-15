@@ -45,33 +45,48 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-        <!--<%# dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>-->
+        <% #dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>
         <% youbi = %w[日 月 火 水 木 金 土] %>
-        <!--<%# for temp_day in 1..dayloop do%>-->
-        <% for temp_day in 1..@last_day do%>
-        <tr align="center" height="50">
-          <td><%= @first_day.month %>/<%= temp_day %></td>
-          <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
-          <td></td>
-          <td></td>
-          <td width="130">
-            <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-            <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
-            <% if @y_m_d == comparison_date %> <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
-              <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
-                <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
-              <% elsif @attendance.where(departure: range).empty? %>　<%# 退勤情報がモデル内に存在しているか判定 %>
-                <%= link_to "退 勤", user_path(flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
-              <% else %>
-                <%# 退勤ボタンを押下済みならボタンは非表示 %>
-              <% end %>
-            <% end %>
-          </td>
-          <td></td>
-          <td></td>
-          <td width="10"></td>
-          <td></td><td></td><td></td><td></td>
-      </tr>
+        <%# for temp_day in 1..dayloop do%>
+        <%# for temp_day in 1..@last_day do %>
+        <% (1..@last_day).each do |temp_day| %>
+            <tr align="center" height="50">
+              <td><%= @first_day.month %>/<%= temp_day %></td>
+              <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
+              <td><%# 出勤時間 %>
+              <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+              <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+                <% if !@attendance.where(arrival: range).empty? %>
+                  <% day_view = @attendance.where(arrival: range) %>
+                  <%# @attendance.each do |arrival,arrival_value| %>
+                    <%#= @attendance.arrival_value.hour if @attendance["arrival"].day = temp_day %>
+                      <%= day_view["arrival"] %>
+                  <%# end %>
+                <% else %>
+                <% end %>
+              </td>
+              <td><%# 出勤分 %>
+                
+              </td>
+              <td width="130">
+                <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
+                <% acting_day =Date.today%>
+                <% if @y_m_d.year == acting_day.year && @y_m_d.month == acting_day.month  && @y_m_d.day == temp_day %>
+                  <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
+                    <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
+                  <% elsif @attendance.where(departure: range).empty? %>　<%# 退勤情報がモデル内に存在しているか判定 %>
+                    <%= link_to "退 勤", user_path(flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
+                  <% else %>
+                    <%# 退勤ボタンを押下済みならボタンは非表示 %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td></td>
+              <td></td>
+              <td width="10"></td>
+              <td></td><td></td><td></td><td></td>
+            </tr>
+            <%# @first_day = @first_day + 1 %>
         <% end %>
         
       
