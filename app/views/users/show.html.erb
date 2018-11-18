@@ -49,28 +49,37 @@
         <% youbi = %w[日 月 火 水 木 金 土] %>
         <%# for temp_day in 1..dayloop do%>
         <%# for temp_day in 1..@last_day do %>
-        <% (1..@last_day).each do |temp_day| %>
+        <% (@first_day.day...@last_day).each do |temp_day| %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
               <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
+              
+              
               <td><%# 出勤時間 %>
-              <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-              <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
-                <% if !@attendance.where(arrival: range).empty? %>
-                  <% day_view = @attendance.where(arrival: range) %>
-                  <%# @attendance.each do |arrival,arrival_value| %>
+              <%# comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+              <%# range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+                
+
+                  <% @attendance.each do |value| %>
+                    <% co_day = value[:arrival] %>
+                    <<%= co_day.hour if co_day.day = temp_day %>
+                    <%#= @attendance[1].arrival.hour %>
+                    
                     <%#= @attendance.arrival_value.hour if @attendance["arrival"].day = temp_day %>
-                      <%= day_view["arrival"] %>
-                  <%# end %>
-                <% else %>
-                <% end %>
+                      <%#= day_view["arrival"] %>
+                    <%# end %>
+                 <% end %>
               </td>
+              
+              
               <td><%# 出勤分 %>
                 
               </td>
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
                 <% acting_day =Date.today%>
+                <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+                <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
                 <% if @y_m_d.year == acting_day.year && @y_m_d.month == acting_day.month  && @y_m_d.day == temp_day %>
                   <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
