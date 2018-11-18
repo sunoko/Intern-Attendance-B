@@ -45,7 +45,7 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-        <% #dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>
+        <%# dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>
         <% youbi = %w[日 月 火 水 木 金 土] %>
         <%# for temp_day in 1..dayloop do%>
         <%# for temp_day in 1..@last_day do %>
@@ -56,24 +56,17 @@
               
               
               <td><%# 出勤時間 %>
-              <%# comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-              <%# range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
-                
-
                   <% @attendance.each do |value| %>
-                    <% co_day = value[:arrival] %>
-                    <<%= co_day.hour if co_day.day = temp_day %>
-                    <%#= @attendance[1].arrival.hour %>
-                    
-                    <%#= @attendance.arrival_value.hour if @attendance["arrival"].day = temp_day %>
-                      <%#= day_view["arrival"] %>
-                    <%# end %>
+                    <% arrival_h = value[:arrival] %>
+                    <%= arrival_h.hour if arrival_h.day == temp_day %>
                  <% end %>
               </td>
-              
-              
+
               <td><%# 出勤分 %>
-                
+                  <% @attendance.each do |value| %>
+                    <% arrival_m = value[:arrival] %>
+                    <%= arrival_m.min if arrival_m.day == temp_day %>
+                 <% end %>                
               </td>
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
@@ -90,10 +83,29 @@
                   <% end %>
                 <% end %>
               </td>
-              <td></td>
-              <td></td>
+              
+              <td><%# 退勤時間 %>
+                  <% @attendance.each do |value| %>
+                    <% departure_h = value[:departure] %>
+                    <% if departure_h != nil %>
+                      <%= departure_h.hour if departure_h.day == temp_day %>
+                    <% end %>
+                 <% end %>                
+              </td>
+              
+              <td><%# 退勤分 %>
+                  <% @attendance.each do |value| %>
+                    <% departure_m = value[:departure] %>
+                    <% if departure_m != nil %>
+                      <%= departure_m.min if departure_m.day == temp_day %>
+                    <% end %>
+                 <% end %>                     
+              </td>
               <td width="10"></td>
-              <td></td><td></td><td></td><td></td>
+              <td><%# 滞在時間 %>
+                
+              </td>
+              <td></td><td></td><td></td>
             </tr>
             <%# @first_day = @first_day + 1 %>
         <% end %>
