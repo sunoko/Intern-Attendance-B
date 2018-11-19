@@ -5,8 +5,8 @@
  <table border="1" width="1200">
     <tr align="center">
       <td height="45">
-        <%= link_to "←", user_path(piyo: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>
-        <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表
+        <%= link_to "←", user_path(piyo: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>   
+        <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表   
         <%= link_to "→", user_path(piyo: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         
       </td>
@@ -103,13 +103,18 @@
               </td>
               <td width="10"></td>
               <td><%# 滞在時間 %>
-                
+                  <% @attendance.each do |value| %>
+                    <% departure_time = value[:departure] %>
+                    <% arrival_time = value[:arrival] %>
+                    <% if departure_time != nil %>
+                      <%= ((departure_time - arrival_time)/ 3600 ).round(2) if departure_time.day == temp_day %>
+                    <% end %>
+                 <% end %>                
               </td>
               <td></td><td></td><td></td>
             </tr>
-            <%# @first_day = @first_day + 1 %>
         <% end %>
-        
+        <td></td>
       
       
     </table> 
