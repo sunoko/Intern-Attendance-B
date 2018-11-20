@@ -107,7 +107,7 @@
                     <% departure_time = value[:departure] %>
                     <% arrival_time = value[:arrival] %>
                     <% if departure_time != nil %>
-                      <%= ((departure_time - arrival_time)/ 3600 ).round(2) if departure_time.day == temp_day %>
+                      <%= ((departure_time - arrival_time) / 3600 ).round(2) if departure_time.day == temp_day %>
                     <% end %>
                  <% end %>                
               </td>
