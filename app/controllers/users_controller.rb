@@ -5,6 +5,9 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
+  def attendance_edit
+  end
+  
   def index
     @users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
   end
@@ -18,7 +21,7 @@ class UsersController < ApplicationController
       # byebug
       @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
       @attendance.save
-      params[:flag] = "" #フラグが内部保持されてしまうのでリセット→リセットしないと画面更新すると出勤イベントが反応してしまう為
+      params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
     end
     
     if params[:flag] == "departure_flag" #退勤ボタンを押下
@@ -28,7 +31,7 @@ class UsersController < ApplicationController
       @update_id = Attendance.where(arrival: start_today...end_today)
       # byebug
       @update_id.update(departure: DateTime.now)
-      params[:flag] == ""
+      params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
     end
     
     if params[:piyo] == nil

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <table border="1" width="1200">
+    <tr align="center">
+      <td>日付</td>
+      <td>曜日</td>
+      <td>出社</td>
+      <td>退社</td>
+      <td>在社時間</td>
+      <td>備考</td>
+      <td>残業指示</td>
+      <td>指示者</td>
+    </tr>
+    <tr align="center">
+        <% form_for(@attendance) do |f| %>
+          <td><%= @attendance.month %>/<%= @attendance.day %>></td>
+          <td><%= f.text_field :name, class: 'form-control' %></td>
+        <% end %>
+    </tr>
+  </table> 
+  </body>
+</html>    
