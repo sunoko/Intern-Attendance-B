@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       @update_id = Attendance.where(arrival: start_today...end_today)
       # byebug
       @update_id.update(departure: DateTime.now)
-      params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
+      params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
     end
     
     if params[:piyo] == nil

@@ -28,8 +28,7 @@
 　
 　<br><br><br>
 　
-　<body>
-　  <%= link_to "勤怠を編集", attend_edit_path, style:"color:white", class: 'btn btn-default btn-primary' %>
+　<body><%= link_to "勤怠を編集", attend_edit_path, style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -51,6 +50,8 @@
         <%# for temp_day in 1..dayloop do%>
         <%# for temp_day in 1..@last_day do %>
         <% (@first_day.day...@last_day).each do |temp_day| %>
+          <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+          <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
               <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
@@ -59,22 +60,22 @@
               <td><%# 出勤時間 %>
                   <% @attendance.each do |value| %>
                     <% arrival_h = value[:arrival] %>
-                    <%= arrival_h.hour if arrival_h.day == temp_day %>
-                 <% end %>
+                    <%= arrival_h.hour if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_h.day == temp_day %>
+                  <% end %>
               </td>
 
               <td><%# 出勤分 %>
                   <% @attendance.each do |value| %>
                     <% arrival_m = value[:arrival] %>
-                    <%= arrival_m.min if arrival_m.day == temp_day %>
+                    <%= arrival_m.min if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_m.day == temp_day %>
                  <% end %>                
               </td>
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
-                <% acting_day =Date.today%>
-                <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-                <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
-                <% if @first_day.year == acting_day.year && @first_day.month == acting_day.month  && @y_m_d.day == temp_day %>
+                <%# acting_day =Date.today%>
+                <%# comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+                <%# range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+                <% if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && temp_day ==  @y_m_d.day %>
                   <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
                   <% elsif @attendance.where(departure: range).empty? %>　<%# 退勤情報がモデル内に存在しているか判定 %>
@@ -89,7 +90,7 @@
                   <% @attendance.each do |value| %>
                     <% departure_h = value[:departure] %>
                     <% if departure_h != nil %>
-                      <%= departure_h.hour if departure_h.day == temp_day %>
+                      <%= departure_h.hour if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && departure_h.day == temp_day %>
                     <% end %>
                  <% end %>                
               </td>
@@ -98,7 +99,7 @@
                   <% @attendance.each do |value| %>
                     <% departure_m = value[:departure] %>
                     <% if departure_m != nil %>
-                      <%= departure_m.min if departure_m.day == temp_day %>
+                      <%= departure_m.min if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && departure_m.day == temp_day %>
                     <% end %>
                  <% end %>                     
               </td>
@@ -108,7 +109,7 @@
                     <% departure_time = value[:departure] %>
                     <% arrival_time = value[:arrival] %>
                     <% if departure_time != nil %>
-                      <%= ((departure_time - arrival_time) / 3600 ).round(2) if departure_time.day == temp_day %>
+                      <%= ((departure_time - arrival_time) / 3600 ).round(2) if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && departure_time.day == temp_day %>
                     <% end %>
                   <% end %>                
               </td>
@@ -127,7 +128,7 @@
               <% total += time_in_company %>
             <% end %>
           <% end %>
-          <%= total.round(2)  %>
+          <%= total.round(2) if  @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month %>
         </td>
         <td align="center" height="50"></td>
         <td align="center" height="50"></td>
