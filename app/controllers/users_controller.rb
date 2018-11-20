@@ -53,18 +53,6 @@ class UsersController < ApplicationController
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(created_at: @first_day...@to)
   
-    # (@first_day...@last_day).each do |temp_day|
-      # @attendance.each do |value|
-      #   co_day = value[:arrival]
-      #   byebug
-      # @attendance[1].arrival.hour if co_day.day = 6
-      # end 
-    # end
-    
-     #comparison_date = Date.new(Date.today.year,Date.today.month,temp_day)
-     #range = comparison_date.beginning_of_day..comparison_date.end_of_day
-     #co_day =  @attendance.find_by(arrival: comparison_date) if @attendance.find_by(arrival: comparison_date).empty?
-     
   end
   
   def new
