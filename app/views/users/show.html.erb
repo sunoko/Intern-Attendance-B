@@ -29,7 +29,7 @@
 　<br><br><br>
 　
 　<body>
-　  <table border="1" width="1200">
+　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
         <td rowspan="2">曜日</td>
@@ -109,7 +109,7 @@
                     <% if departure_time != nil %>
                       <%= ((departure_time - arrival_time) / 3600 ).round(2) if departure_time.day == temp_day %>
                     <% end %>
-                 <% end %>                
+                  <% end %>                
               </td>
               <td></td><td></td><td></td>
             </tr>
@@ -117,6 +117,16 @@
         <td align="center" height="50" colspan="2"><%= 0.00 %></td>
         <td align="center" height="50" colspan="6"></td>
         <td align="center" height="50"><%# 滞在時間合計 %>
+        <%= total = 0 %>
+          <% @attendance.each do |value| %>
+            <% departure_time = value[:departure] %>
+            <% arrival_time = value[:arrival] %>
+            <% if departure_time != nil %>
+              <% time_in_company = (departure_time - arrival_time) / 3600 %>
+              <% total += time_in_company %>
+            <% end %>
+          <% end %>
+          <%= total.round(2)  %>
         </td>
         <td align="center" height="50"></td>
         <td align="center" height="50"></td>

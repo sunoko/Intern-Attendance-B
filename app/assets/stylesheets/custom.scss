@@ -211,6 +211,19 @@ input {
   height: auto !important;
 }
 
+.s-tbl {
+	border-collapse: collapse;
+}
+.s-tbl th, .s-tbl td {
+	border: 1px solid #000;
+}
+.s-tbl tr:nth-child(even) {
+	background: #eee;
+}
+.s-tbl tr:hover {
+	background: #ff0;
+}
+
 #error_explanation {
   color: red;
   ul {
