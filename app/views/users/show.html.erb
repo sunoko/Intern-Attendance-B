@@ -48,7 +48,7 @@
         <% (@first_day.day...@last_day).each do |temp_day| %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
-              <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
+              <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
               
               
               <td><%# 出勤時間 %>
