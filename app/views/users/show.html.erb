@@ -20,7 +20,6 @@
       <td>コード</td>
       <td width="10"></td>
       <td>出勤日数</td>
-      <!--<%#= last_day = Date.new(@first_day.year, @first_day.month, -1).day %>-->
       <td>締め <%= @first_day.month %>/<%= @last_day %></td>
     </tr>
     </table> 
@@ -45,13 +44,8 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-        <%# dayloop = Date.new(@first_day.year, @first_day.month, -1).day %>
         <% youbi = %w[日 月 火 水 木 金 土] %>
-        <%# for temp_day in 1..dayloop do%>
-        <%# for temp_day in 1..@last_day do %>
         <% (@first_day.day...@last_day).each do |temp_day| %>
-          <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-          <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
               <td><%= youbi [@first_day.change(day: temp_day) .wday] %></td>
@@ -72,9 +66,8 @@
               </td>
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
-                <%# acting_day =Date.today%>
-                <%# comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
-                <%# range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+                <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+                <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
                 <% if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && temp_day ==  @y_m_d.day %>
                   <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
