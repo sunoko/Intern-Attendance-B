@@ -5,7 +5,32 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
-  def attendance_edit
+  def attend_edit
+    @user = User.find(params[:id])
+    @attendance = Attendance.find(@user.id)
+    @y_m_d = Date.today
+    @youbi = %w[日 月 火 水 木 金 土]    
+      if params[:piyo] == nil
+         # params[:piyo]が存在しない(つまりデフォルト時)
+         # ▼月初(今月の1日, 00:00:00)を取得します
+         @first_day = DateTime.current.beginning_of_month
+      else
+         # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
+         #  paramsの中身は"文字列"で送られてくるので注意
+         #  文字列を時間の型に直すときはparseメソッドを使うか、
+        # @first_day = Time.parse(params[:piyo])
+         #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
+         @first_day = params[:piyo].to_date
+      end
+    # ▼月末(30or31日, 23:59:59)を取得します
+    @last_day = @first_day.end_of_month.day
+    #byebug
+    # 次月の初日未満（初日は含まない）
+    # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
+    # @to = Date.today.next_month.beginning_of_month
+    @to = DateTime.current.next_month.beginning_of_month
+    #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
+    @attendance = Attendance.where(created_at: @first_day...@to)
   end
   
   def index

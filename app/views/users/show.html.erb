@@ -27,7 +27,7 @@
 　
 　<br><br><br>
 　
-　<body><%= link_to "勤怠を編集", attend_edit_path, style:"color:white", class: 'btn btn-default btn-primary' %>
+　<body><%= link_to "勤怠を編集", attend_edit_path(id: @user), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -44,8 +44,8 @@
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
 
-        <% youbi = %w[日 月 火 水 木 金 土] %>
-        <% (@first_day.day...@last_day).each do |temp_day| %>
+        <%# youbi = %w[日 月 火 水 木 金 土] %>
+        <% (@first_day.day...@last_day + 1).each do |temp_day| %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
               <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
