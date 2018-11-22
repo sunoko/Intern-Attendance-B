@@ -43,9 +43,15 @@ class UsersController < ApplicationController
   @y_m_d = Date.today
   @youbi = %w[日 月 火 水 木 金 土]
     if params[:flag] == "arrival_flag" #出勤ボタンを押下
+      start_today = Time.zone.today.beginning_of_day
+        end_today = Time.zone.today.end_of_day      
+
+      @update_id = Attendance.where(arrival: start_today...end_today)
+      if @update_id.arrival.nil?
       # byebug
-      @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
-      @attendance.save
+        @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
+        @attendance.save
+      end
       params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
     end
     
