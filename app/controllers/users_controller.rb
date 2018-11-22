@@ -47,7 +47,7 @@ class UsersController < ApplicationController
         end_today = Time.zone.today.end_of_day      
 
       @update_id = Attendance.where(arrival: start_today...end_today)
-      if @update_id.arrival.nil?
+      if @update_id.arrival.empty?
       # byebug
         @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
         @attendance.save
