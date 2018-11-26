@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
   get 'users/new'
 
-  root                    'static_pages#home'
-  get    'help'        => 'static_pages#help'
-  get    'link'        => 'static_pages#link'
-  get    'about'       => 'static_pages#about'
-  get    'contact'     => 'static_pages#contact'
-  get    'signup'      => 'users#new'
-  get    'login'       => 'sessions#new'
-  post   'login'       => 'sessions#create'
-  delete 'logout'      => 'sessions#destroy'
-  put    'attend_edit' => 'users#attend_edit'
+  root                      'static_pages#home'
+  get    'help'          => 'static_pages#help'
+  get    'link'          => 'static_pages#link'
+  get    'about'         => 'static_pages#about'
+  get    'contact'       => 'static_pages#contact'
+  get    'signup'        => 'users#new'
+  get    'login'         => 'sessions#new'
+  post   'login'         => 'sessions#create'
+  delete 'logout'        => 'sessions#destroy'
+  get    'attend_edit'   => 'users#attend_edit'
+  put    'attend_update' => 'users#attend_update'
   
   # get '/users/:id/:update_id/:departure_flag' => 'users#show'
   

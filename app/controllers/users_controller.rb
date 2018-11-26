@@ -5,6 +5,9 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
+  def attend_update
+    
+  end
   def attend_edit
     @user = User.find(params[:id])
     @attendance = Attendance.find(@user.id)
@@ -61,7 +64,7 @@ class UsersController < ApplicationController
     # #退勤時イベントでの上書きするAttendanceのidカラムを取得
     #   @update_id = Attendance.where(arrival: start_today...end_today)
     #   # byebug
-      @attendance = find_by(title: @y_m_d)
+      @attendance = find_by(attendance_date: @y_m_d)
       @attendance.update(departure: DateTime.now)
       params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
     end
