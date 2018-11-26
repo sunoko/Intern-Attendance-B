@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181106141547) do
+ActiveRecord::Schema.define(version: 20181126113253) do
 
   create_table "atten_times", force: :cascade do |t|
     t.time "arrival_time"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20181106141547) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "attendance_date"
   end
 
   create_table "microposts", force: :cascade do |t|

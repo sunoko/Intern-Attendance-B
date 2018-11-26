@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get    'login'       => 'sessions#new'
   post   'login'       => 'sessions#create'
   delete 'logout'      => 'sessions#destroy'
-  get    'attend_edit' => 'users#attend_edit'
+  put    'attend_edit' => 'users#attend_edit'
   
   # get '/users/:id/:update_id/:departure_flag' => 'users#show'
   

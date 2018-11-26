@@ -23,7 +23,7 @@ class UsersController < ApplicationController
          @first_day = params[:piyo].to_date
       end
     # ▼月末(30or31日, 23:59:59)を取得します
-    @last_day = @first_day.end_of_month.day
+    @last_day = @first_day.end_of_month.day 
     #byebug
     # 次月の初日未満（初日は含まない）
     # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
@@ -47,21 +47,22 @@ class UsersController < ApplicationController
         end_today = Time.zone.today.end_of_day      
 
       @update_id = Attendance.where(arrival: start_today...end_today)
-      if @update_id.arrival.empty?
+      if @update_id[1] == nil
       # byebug
-        @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now)
+        @attendance = Attendance.new(user_id: @user.id, arrival: DateTime.now, attendance_date: @y_m_d)
         @attendance.save
       end
       params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
     end
     
     if params[:flag] == "departure_flag" #退勤ボタンを押下
-      start_today = Time.zone.today.beginning_of_day
-        end_today = Time.zone.today.end_of_day      
-     #退勤時イベントでの上書きするAttendanceのidカラムを取得
-      @update_id = Attendance.where(arrival: start_today...end_today)
-      # byebug
-      @update_id.update(departure: DateTime.now)
+    #   start_today = Time.zone.today.beginning_of_day
+    #     end_today = Time.zone.today.end_of_day      
+    # #退勤時イベントでの上書きするAttendanceのidカラムを取得
+    #   @update_id = Attendance.where(arrival: start_today...end_today)
+    #   # byebug
+      @attendance = find_by(title: @y_m_d)
+      @attendance.update(departure: DateTime.now)
       params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
     end
     
