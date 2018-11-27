@@ -16,8 +16,8 @@
         <tr align="center" valign="top" font-size= 20pt height="100">
           <td><%= @first_day.month %>/<%= temp_day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
-          <td><input type="time" name="出社",[arrival],[temp_day] value="--:--"></td>
-          <td><input type="time" name="退社",[departure],[temp_day] value="--:--"></td>
+          <td><input type="time" name="arrival[][temp_day]" value="--:--"></td>
+          <td><input type="time" name="departure[][temp_day]" value="--:--"></td>
           <td></td>
           <td><input type="text" name="備考" size="4" maxlength="20" ></td>
           <td><input type="text" name="残業指示" size="4" maxlength="20" ></td>
