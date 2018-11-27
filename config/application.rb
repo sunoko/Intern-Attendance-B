@@ -20,6 +20,9 @@ module SampleApp
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     
+    # UTC ➡ JST へ変更
+    config.time_zone = 'Tokyo'
+    
     # 認証トークンをremoteフォームに埋め込む
     config.action_view.embed_authenticity_token_in_remote_forms = true
     
