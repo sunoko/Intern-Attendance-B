@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
-  <table class="s-tbl" border="1" width="1200">
+    <table class="s-tbl" border="1" width="1200">
     <tr align="center" height="30">
       <td>日付</td>
       <td>曜日</td>
@@ -12,24 +12,48 @@
       <td>残業指示</td>
       <td>指示者</td>
     </tr>
-      <% (@first_day.day...@last_day + 1 ).each do |temp_day| %>
+    <%= form_for @attendance, :url => {:action => 'attend_update'}, method: "patch" do |f| %>
+      <% (@first_day.day..@last_day).each do |temp_day| %>
         <tr align="center" valign="top" font-size= 20pt height="100">
           <td><%= @first_day.month %>/<%= temp_day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
-          <td><input type="time" name="arrival[][temp_day]" value="--:--"></td>
-          <td><input type="time" name="departure[][temp_day]" value="--:--"></td>
+          
+          <td width="50">
+    				<!--#既存レコード無い場合は、Workモデル新規生成。-->
+    				<!--<%# comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>-->
+    				<!--<%# if Attendance.find_by(attendance_date: temp_day, user_id: current_user.id).nil? %>-->
+    				<!--	<%# work = Attendance.new(attendance_date: temp_day, user_id: current_user.id) %> -->
+    				<!--	<%# work.save %>-->
+    				<!--#既存レコードある場合は、読み込み。-->
+    				<!--<%# else %>-->
+    				<!--	<%# work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>-->
+    				<!--<%# end %>-->
+    				<!--#出社時刻/退社時刻の入力フォーム-->
+    				<%= fields_for "attendances[]", temp_day do |fi| %>
+    					<%= fi.time_field :arrival, class: 'form-control' %>
+    					<%#= fi.time_select :arrival, :default => work.arrival if !work.arrival.nil? %>
+    			</td>		
+          <td width="50">
+    					<%#= fi.time_select :departure, :include_blank => true if work.arrival.nil? %>
+    					<%#= fi.time_select :departure, :default => work.departure if !work.departure.nil? %>
+					</td>
+				<% end %>
+
+			
           <td></td>
           <td><input type="text" name="備考" size="4" maxlength="20" ></td>
           <td><input type="text" name="残業指示" size="4" maxlength="20" ></td>
           <td><input type="text" name="指示者" size="4" maxlength="20" ></td>
         </tr>
-      <% end %>
-  </table>
-  <tr align="center">
-      <td>
-        <%= link_to "キャンセル", attend_edit_path, style:"color:white", class: "btn btn-primary" %>
-        <%= link_to "更新", attend_update_path, style:"color:white", class: "btn btn-primary" %>
-      </td>
-  </tr>
+      <% end %> <%# each doループのend %>
+      </table>
+  
+        <table align="center">
+          <td>
+              <%= link_to "キャンセル", 'users/current_user.id', style:"color:white", class: "btn btn-primary" %>
+              <%= f.submit "保存", class: "btn btn-primary" %>
+          </td>
+        </table>
+	  <% end %> <%# form_forのend %>
   </body>
 </html>    

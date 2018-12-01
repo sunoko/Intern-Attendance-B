@@ -27,7 +27,7 @@
 　
 　<br><br><br>
 　
-　<body><%= link_to "勤怠を編集", attend_edit_path(id: @user), style:"color:white", class: 'btn btn-default btn-primary' %>
+　<body><%= link_to "勤怠を編集", attend_edit_path(@attendance, params: { id: @user.id, first_day: @first_day }), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -54,19 +54,23 @@
               <td><%# 出勤時間 %>
                   <% @attendance.each do |value| %>
                     <% arrival_h = value[:arrival] %>
-                    <%= arrival_h.hour if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_h.day == temp_day %>
+                    <% if arrival_h != nil %>
+                      <%= arrival_h.hour if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_h.day == temp_day %>
+                    <% end %>
                   <% end %>
               </td>
 
               <td><%# 出勤分 %>
                   <% @attendance.each do |value| %>
                     <% arrival_m = value[:arrival] %>
-                    <%= arrival_m.min if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_m.day == temp_day %>
+                    <% if arrival_m != nil %>
+                      <%= arrival_m.min if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && arrival_m.day == temp_day %>
+                    <% end %>
                  <% end %>                
               </td>
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
-                <% comparison_date = Date.new(Date.today.year,Date.today.month,temp_day) %>
+                <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>
                 <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
                 <% if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && temp_day ==  @y_m_d.day %>
                   <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
