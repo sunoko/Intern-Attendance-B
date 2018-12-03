@@ -27,7 +27,7 @@
 　
 　<br><br><br>
 　
-　<body><%= link_to "勤怠を編集", attend_edit_path(@attendance, params: { id: @user.id, first_day: @first_day }), style:"color:white", class: 'btn btn-default btn-primary' %>
+　<body><%= link_to "勤怠を編集", attend_edit_path(@user, params:{first_day: @first_day}), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -45,7 +45,7 @@
       </tr>
 
         <%# youbi = %w[日 月 火 水 木 金 土] %>
-        <% (@first_day.day...@last_day + 1).each do |temp_day| %>
+        <% (@first_day.day..@last_day).each do |temp_day| %>
             <tr align="center" height="50">
               <td><%= @first_day.month %>/<%= temp_day %></td>
               <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
@@ -73,9 +73,9 @@
                 <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>
                 <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
                 <% if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && temp_day ==  @y_m_d.day %>
-                  <% if @attendance.where(arrival: range).empty? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
+                  <% if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
-                  <% elsif @attendance.where(departure: range).empty? %>　<%# 退勤情報がモデル内に存在しているか判定 %>
+                  <% elsif Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id)[:departure] == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "退 勤", user_path(flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
                   <% else %>
                     <%# 退勤ボタンを押下済みならボタンは非表示 %>

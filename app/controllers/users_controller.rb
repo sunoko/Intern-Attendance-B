@@ -6,14 +6,57 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
   
   def attend_update
-    works_params.each do |id, value|
-      work = Attendance.find(id)
-      work.update_attributes(value)
-    end
-    flash[:notice] = "勤怠時間を編集しました"
-    redirect_to("/users/attend_edit")
+    # works_params.each do |id, value|
+    #   work = Attendance.find(id)
+    #   work.update_attributes(value)
+    # end
+    # flash[:notice] = "勤怠時間を編集しました"
+    # redirect_to("/users/attend_edit")
     # byebug
+    
+ 
+    @user = User.find_by(id: params[:id])
+    error_count = 0
+    message = ""
+    
+    works_params.each do |id, item|
+          attendance = Attendance.find(id)
+          #byebug
+          
+          #出社時間と退社時間の両方の存在を確認
+          if item["arrival"].blank? && item["departure"].blank?
+            message = '一部編集が無効となった項目があります。'
+            
+            # 当日以降の編集はadminユーザのみ
+          elsif attendance.attendance_date > Date.current && !current_user.admin?
+            message = '明日以降の勤怠編集は出来ません。'
+            error_count += 1
+          
+          #出社時間 > 退社時間ではないか
+          elsif item["arrival"].to_s > item["departure"].to_s
+            message = '出社時間より退社時間が早い項目がありました'
+            error_count += 1
+          end
+    end #eachの締め
+    
+    if error_count > 0
+      flash[:warning] = message
+    else
+      works_params.each do |id, item|
+          attendance = Attendance.find(id)
+          
+          # 当日以降の編集はadminユーザのみ
+          if item["arrival"].blank? && item["departure"].blank?
+          
+          else
+            attendance.update_attributes(item)
+            flash[:success] = '勤怠時間を更新しました。'
+          end
+      end #eachの締め
+    end
+    redirect_to("/users/attend_edit")
   end
+  
   def attend_edit
     @user = User.find(current_user.id)
     @attendance = Attendance.find_by(user_id: @user.id)
@@ -40,6 +83,19 @@ class UsersController < ApplicationController
     @to = DateTime.current.next_month.beginning_of_month
     #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
     #@attendance = Attendance.where(created_at: @first_day...@to)
+    
+    # (@first_day..@last_day).each do |date|
+    #   comparison_date = Time.new(Time.current.year,Time.current.month,temp_day)
+    #   range = comparison_date.beginning_of_day..comparison_date.end_of_day
+    #   #既存レコード無い場合は、Workモデル新規生成。
+  		# if Attendance.find_by(attendance_date: range, user_id: current_user.id).nil?
+  		# 	work = Attendance.new(attendance_date: range, userid: current_user.id)
+  		# 	work.save
+  		# #既存レコードある場合は、読み込み。
+  		# else
+  		# 	work = Attendance.find_by(attendance_date: range, userid: current_user.id)
+  		# end
+		# end
   end
   
   def index
@@ -59,7 +115,8 @@ class UsersController < ApplicationController
       # @update_id = Attendance.where(arrival: start_today..end_today)
       # if @update_id[1] == nil
       # byebug
-        @attendance = Attendance.new(user_id: @user.id, arrival: Time.current, attendance_date: Time.current)
+        savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+        @attendance = Attendance.new(user_id: @user.id, arrival: savetime, attendance_date: savetime)
         @attendance.save
       # end
       params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
@@ -73,7 +130,8 @@ class UsersController < ApplicationController
     #   # byebug
       @attendance = Attendance.find_by(attendance_date: @y_m_d)
       if @attendance != nil
-        @attendance.update(departure: Time.current)
+        savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+        @attendance.update(departure: savetime)
         params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
       end
     end
@@ -156,7 +214,8 @@ class UsersController < ApplicationController
   private
   
     def works_params
-      params.permit(attendances: [:arrival, :departure])[:attendances]
+       params.permit(attendances: [:arrival, :departure])[:attendances]
+        # params.require(:work).permit(attendances: [:arrival, :departure])[:attendances]      
     end
 
     def user_params

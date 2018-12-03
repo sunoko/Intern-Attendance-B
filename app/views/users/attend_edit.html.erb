@@ -12,32 +12,28 @@
       <td>残業指示</td>
       <td>指示者</td>
     </tr>
-    <%= form_for @attendance, :url => {:action => 'attend_update'}, method: "patch" do |f| %>
+    <%= form_for @user, :url => {:action => 'attend_update'}, method: "patch" do |f| %>
       <% (@first_day.day..@last_day).each do |temp_day| %>
         <tr align="center" valign="top" font-size= 20pt height="100">
           <td><%= @first_day.month %>/<%= temp_day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
-          
+          <!--#既存レコード無い場合は、Workモデル新規生成。-->
+          <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>
+  				<% if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
+  					<% work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
+  					<% work.save %>
+  				<!--#既存レコードある場合は、読み込み。-->
+  				<% else %>
+  					<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
+  				<% end %>
           <td width="50">
-    				<!--#既存レコード無い場合は、Workモデル新規生成。-->
-    				<!--<%# comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>-->
-    				<!--<%# if Attendance.find_by(attendance_date: temp_day, user_id: current_user.id).nil? %>-->
-    				<!--	<%# work = Attendance.new(attendance_date: temp_day, user_id: current_user.id) %> -->
-    				<!--	<%# work.save %>-->
-    				<!--#既存レコードある場合は、読み込み。-->
-    				<!--<%# else %>-->
-    				<!--	<%# work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>-->
-    				<!--<%# end %>-->
-    				<!--#出社時刻/退社時刻の入力フォーム-->
-    				<%= fields_for "attendances[]", temp_day do |fi| %>
+    				<%= fields_for "attendances[]", work do |fi| %>
     					<%= fi.time_field :arrival, class: 'form-control' %>
-    					<%#= fi.time_select :arrival, :default => work.arrival if !work.arrival.nil? %>
     			</td>		
           <td width="50">
-    					<%#= fi.time_select :departure, :include_blank => true if work.arrival.nil? %>
-    					<%#= fi.time_select :departure, :default => work.departure if !work.departure.nil? %>
+              <%= fi.time_field :departure, class: 'form-control' %>
 					</td>
-				<% end %>
+				　　　<% end %>
 
 			
           <td></td>
