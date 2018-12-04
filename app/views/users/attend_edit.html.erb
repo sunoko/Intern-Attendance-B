@@ -13,12 +13,12 @@
       <td>指示者</td>
     </tr>
     <%= form_for @user, :url => {:action => 'attend_update'}, method: "patch" do |f| %>
-      <% (@first_day.day..@last_day).each do |temp_day| %>
+      <% (@first_day..@last_day).each do |temp_day| %>
         <tr align="center" valign="top" font-size= 20pt height="100">
-          <td><%= @first_day.month %>/<%= temp_day %></td>
-          <td><%= @youbi [@first_day.change(day: temp_day) .wday] %></td>
+          <td><%= @first_day.month %>/<%= temp_day.day %></td>
+          <td><%= @youbi [@first_day.change(day: temp_day.day) .wday] %></td>
           <!--#既存レコード無い場合は、Workモデル新規生成。-->
-          <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>
+          <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day.day) %>
   				<% if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
   					<% work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
   					<% work.save %>

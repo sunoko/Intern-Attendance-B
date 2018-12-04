@@ -23,9 +23,7 @@ module SampleApp
     # UTC ➡ JST へ変更
     # 表示時のタイムゾーンをJSTに設定
     config.time_zone = 'Tokyo'
-    # DB保存時のタイムゾーンをJSTに設定
     config.active_record.default_timezone = :local
-    
     # 認証トークンをremoteフォームに埋め込む
     config.action_view.embed_authenticity_token_in_remote_forms = true
     

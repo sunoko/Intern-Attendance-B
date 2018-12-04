@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     
     works_params.each do |id, item|
           attendance = Attendance.find(id)
-          #byebug
+          # byebug
           
           #出社時間と退社時間の両方の存在を確認
           if item["arrival"].blank? && item["departure"].blank?
@@ -50,6 +50,7 @@ class UsersController < ApplicationController
           
           else
             attendance.update_attributes(item)
+            # attendance.update_attributes(id,item)
             flash[:success] = '勤怠時間を更新しました。'
           end
       end #eachの締め
@@ -65,7 +66,7 @@ class UsersController < ApplicationController
       if params[:piyo] == nil
          # params[:piyo]が存在しない(つまりデフォルト時)
          # ▼月初(今月の1日, 00:00:00)を取得します
-         @first_day = DateTime.current.beginning_of_month
+         @first_day = Date.new(Date.today.year, Date.today.month)
       else
          # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
          #  paramsの中身は"文字列"で送られてくるので注意
@@ -75,7 +76,7 @@ class UsersController < ApplicationController
          @first_day = params[:piyo].to_date
       end
     # ▼月末(30or31日, 23:59:59)を取得します
-    @last_day = @first_day.end_of_month.day 
+    @last_day = @first_day.end_of_month
     #byebug
     # 次月の初日未満（初日は含まない）
     # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
@@ -105,7 +106,7 @@ class UsersController < ApplicationController
   def show
   @user = User.find(current_user.id)
   @attendance = Attendance.find_by(user_id: @user.id)
-  @y_m_d = Time.current
+  @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
   
     if params[:flag] == "arrival_flag" #出勤ボタンを押下
@@ -116,6 +117,7 @@ class UsersController < ApplicationController
       # if @update_id[1] == nil
       # byebug
         savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+        # byebug
         @attendance = Attendance.new(user_id: @user.id, arrival: savetime, attendance_date: savetime)
         @attendance.save
       # end
@@ -139,7 +141,7 @@ class UsersController < ApplicationController
     if params[:piyo] == nil
        # params[:piyo]が存在しない(つまりデフォルト時)
        # ▼月初(今月の1日, 00:00:00)を取得します
-       @first_day = DateTime.current.beginning_of_month
+       @first_day = Date.current.beginning_of_month
     else
        # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
        #  paramsの中身は"文字列"で送られてくるので注意
@@ -154,7 +156,7 @@ class UsersController < ApplicationController
   # 次月の初日未満（初日は含まない）
   # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
   # @to = Date.today.next_month.beginning_of_month
-  @to = DateTime.current.next_month.beginning_of_month
+  @to = Date.current.next_month.beginning_of_month
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(created_at: @first_day...@to)
   

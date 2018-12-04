@@ -299,6 +299,14 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-byebug (3.4.3)
+      byebug (>= 9.0, < 9.1)
+      pry (~> 0.10)
+    pry-doc (0.13.5)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
+    pry-rails (0.3.8)
+      pry (>= 0.10.4)
     puma (3.9.1)
     rack (2.0.5)
     rack-protection (2.0.4)
@@ -412,6 +420,7 @@ GEM
     will_paginate (3.1.6)
     xml-simple (1.1.5)
     xmlrpc (0.3.0)
+    yard (0.9.16)
 
 PLATFORMS
   ruby
@@ -434,6 +443,9 @@ DEPENDENCIES
   minitest (~> 5.10.1)
   minitest-reporters (= 1.1.14)
   pg (= 0.20.0)
+  pry-byebug
+  pry-doc
+  pry-rails
   puma (= 3.9.1)
   rails (= 5.1.4)
   rails-controller-testing (= 1.0.2)
@@ -450,4 +462,4 @@ DEPENDENCIES
   will_paginate (= 3.1.6)
 
 BUNDLED WITH
-   1.16.2
+   1.16.5
