@@ -71,7 +71,7 @@
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
                 <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day) %>
-                <% range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
+                <%# range = comparison_date.beginning_of_day..comparison_date.end_of_day %>
                 <% if @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month  && temp_day ==  @y_m_d.day %>
                   <% if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                     <%= link_to "出 勤", user_path(flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
