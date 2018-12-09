@@ -5,6 +5,47 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
+  def work
+    if params[:flag] == "arrival_flag" #出勤ボタンを押下
+        # start_today = Time.zone.today.beginning_of_day
+        #   end_today = Time.zone.today.end_of_day      
+  
+        # @update_id = Attendance.where(arrival: start_today..end_today)
+        # if @update_id[1] == nil
+        # byebug
+          savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+          date = Date.current
+          # byebug
+          if Attendance.find_by(attendance_date: date, user_id: params[:id]) == nil
+            save = Attendance.new(user_id: params[:id], arrival: savetime, attendance_date: date)
+            save.save
+          else
+            save = Attendance.find_by(attendance_date: date, user_id: params[:id])
+            save.update(arrival: savetime)
+          end
+        flash[:success] = '今日も１日頑張りましょう。'
+        params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
+    end
+      
+      if params[:flag] == "departure_flag" #退勤ボタンを押下
+      #   start_today = Time.zone.today.beginning_of_day
+      #     end_today = Time.zone.today.end_of_day      
+      # #退勤時イベントでの上書きするAttendanceのidカラムを取得
+      #   @update_id = Attendance.where(arrival: start_today...end_today)
+      #   # byebug
+        savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+        date = Date.current
+        save = Attendance.find_by(attendance_date: date, user_id: params[:id])
+        if save.present?
+          # savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
+          save.update(departure: savetime)
+          params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
+        end
+      flash[:success] = '今日も１日お疲れ様でした。'
+      end
+        redirect_to '/users/show'
+  end
+  
   def attend_update
     # works_params.each do |id, value|
     #   work = Attendance.find(id)
@@ -61,7 +102,7 @@ class UsersController < ApplicationController
   def attend_edit
     @user = User.find(current_user.id)
     @attendance = Attendance.find_by(user_id: @user.id)
-    @y_m_d = Time.current
+    @y_m_d = Date.current
     @youbi = %w[日 月 火 水 木 金 土]    
       if params[:piyo] == nil
          # params[:piyo]が存在しない(つまりデフォルト時)
@@ -108,40 +149,11 @@ class UsersController < ApplicationController
   @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
-  
-    if params[:flag] == "arrival_flag" #出勤ボタンを押下
-      # start_today = Time.zone.today.beginning_of_day
-      #   end_today = Time.zone.today.end_of_day      
-
-      # @update_id = Attendance.where(arrival: start_today..end_today)
-      # if @update_id[1] == nil
-      # byebug
-        savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
-        # byebug
-        @attendance = Attendance.new(user_id: @user.id, arrival: savetime, attendance_date: savetime)
-        @attendance.save
-      # end
-      params[:flag] = "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると出勤イベントが反応してしまう為
-    end
-    
-    if params[:flag] == "departure_flag" #退勤ボタンを押下
-    #   start_today = Time.zone.today.beginning_of_day
-    #     end_today = Time.zone.today.end_of_day      
-    # #退勤時イベントでの上書きするAttendanceのidカラムを取得
-    #   @update_id = Attendance.where(arrival: start_today...end_today)
-    #   # byebug
-      @attendance = Attendance.find_by(attendance_date: @y_m_d)
-      if @attendance != nil
-        savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
-        @attendance.update(departure: savetime)
-        params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
-      end
-    end
     
     if params[:piyo] == nil
        # params[:piyo]が存在しない(つまりデフォルト時)
        # ▼月初(今月の1日, 00:00:00)を取得します
-       @first_day = Date.current.beginning_of_month
+       @first_day = Date.new(Date.today.year, Date.today.month)
     else
        # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
        #  paramsの中身は"文字列"で送られてくるので注意
@@ -151,7 +163,7 @@ class UsersController < ApplicationController
        @first_day = params[:piyo].to_date
     end
   # ▼月末(30or31日, 23:59:59)を取得します
-  @last_day = @first_day.end_of_month.day
+  @last_day = @first_day.end_of_month
   #byebug
   # 次月の初日未満（初日は含まない）
   # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
@@ -160,6 +172,17 @@ class UsersController < ApplicationController
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(created_at: @first_day...@to)
   
+    
+    (@first_day..@last_day).each do |temp_day|
+      comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)
+    	if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil?
+    		work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id)
+    		work.save
+    	# <!--#既存レコードある場合は、読み込み。-->
+    	# else
+    	# 	work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id)
+    	end
+  	end
   end
   
   def new

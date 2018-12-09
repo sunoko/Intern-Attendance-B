@@ -9,6 +9,17 @@
 
 /* universal */
 
+/* form */
+input[type="submit"] {
+  // @extend .btn;
+  // @extend .btn-large;
+  // @extend .btn-primary;
+  width:200px;
+  height:100px;
+  // padding: 10px 30px;
+  font-size: 1.3em;
+}
+
 body {
   padding-top: 60px;
 }

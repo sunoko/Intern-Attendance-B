@@ -18,14 +18,14 @@
           <td><%= @first_day.month %>/<%= temp_day.day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day.day) .wday] %></td>
           <!--#既存レコード無い場合は、Workモデル新規生成。-->
-          <% comparison_date = Time.new(Time.current.year,Time.current.month,temp_day.day) %>
-  				<% if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
-  					<% work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
-  					<% work.save %>
+          <% comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
+  				<%# if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
+  					<%# work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
+  					<%# work.save %>
   				<!--#既存レコードある場合は、読み込み。-->
-  				<% else %>
+  				<%# else %>
   					<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
-  				<% end %>
+  				<%# end %>
           <td width="50">
     				<%= fields_for "attendances[]", work do |fi| %>
     					<%= fi.time_field :arrival, class: 'form-control' %>
@@ -43,13 +43,11 @@
         </tr>
       <% end %> <%# each doループのend %>
       </table>
-  
-        <table align="center">
-          <td>
-              <%= link_to "キャンセル", 'users/current_user.id', style:"color:white", class: "btn btn-primary" %>
-              <%= f.submit "保存", class: "btn btn-primary" %>
-          </td>
-        </table>
+      <br><br><br>
+      <center>
+        <%= link_to "キャンセル", 'users/current_user.id', style:"color:white", class: "btn btn-primary" %>
+        <%= f.submit "保存", class: "btn btn-primary" %>
+      </center>
 	  <% end %> <%# form_forのend %>
   </body>
 </html>    

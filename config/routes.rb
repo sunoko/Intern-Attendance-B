@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   delete 'logout'        => 'sessions#destroy'
   get    'attend_edit'   => 'users#attend_edit'
   patch  'attend_edit'   => 'users#attend_update'
+  get    'work'          => 'users#work'
   
   # get '/users/:id/:update_id/:departure_flag' => 'users#show'
   
