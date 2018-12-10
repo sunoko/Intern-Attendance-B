@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181204114916) do
+ActiveRecord::Schema.define(version: 20181210130000) do
 
   create_table "atten_times", force: :cascade do |t|
     t.time "arrival_time"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20181204114916) do
     t.string "reset_digest"
     t.string "affiliation"
     t.datetime "pointing_work_time"
+    t.datetime "basic_work_time"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
