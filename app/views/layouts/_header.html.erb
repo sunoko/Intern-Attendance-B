@@ -14,7 +14,7 @@
             </a>
             <ul class="dropdown-menu" style="background-color:#65baad">
               <li><%= link_to "プロフィール更新", edit_user_path(current_user) %></li>
-              <li><%= link_to "基本情報更新", ba_info_edit_path(current_user), method: :patch %></li>
+              <li><%= link_to "基本情報更新", basic_info_path(current_user) %></li>
               <li class="divider"></li>
               <li>
                 <%= link_to "ログアウト", logout_path, method: :delete %>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get    'attend_edit'   => 'users#attend_edit'
   patch  'attend_edit'   => 'users#attend_update'
   get    'work'          => 'users#work'
+  get    'basic_info'    => 'users#basic_info'
   patch  'ba_info_edit'  => 'users#ba_info_edit'
   
   # get '/users/:id/:update_id/:departure_flag' => 'users#show'

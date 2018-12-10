@@ -5,8 +5,19 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
-  def ba_info_edit
+  def basic_info
     
+  end
+  
+  def ba_info_edit
+    # @user = User.find(current_user.id)
+    # if @user.update_attributes(users_basic_params)
+    #   # 更新に成功した場合を扱う。
+    #   flash[:success] = "基本情報を修正しました"
+    #   redirect_to @user
+    # else
+    #   render 'edit'
+    # end
   end
 
   def work
@@ -51,15 +62,6 @@ class UsersController < ApplicationController
   end
   
   def attend_update
-    # works_params.each do |id, value|
-    #   work = Attendance.find(id)
-    #   work.update_attributes(value)
-    # end
-    # flash[:notice] = "勤怠時間を編集しました"
-    # redirect_to("/users/attend_edit")
-    # byebug
-    
- 
     @user = User.find_by(id: params[:id])
     error_count = 0
     message = ""
@@ -241,10 +243,12 @@ class UsersController < ApplicationController
   end
   
   private
+  # 　def users_basic_params
+  # 　  params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
+  # 　end
   
     def works_params
        params.permit(attendances: [:arrival, :departure])[:attendances]
-        # params.require(:work).permit(attendances: [:arrival, :departure])[:attendances]      
     end
 
     def user_params
