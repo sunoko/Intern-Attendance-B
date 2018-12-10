@@ -1,0 +1,11 @@
+<%= form_for(current_user, :url => {:controller => :users, :action => :ba_info_edit}) do |f| %>
+  <%= render 'shared/error_messages', object: current_user %>
+
+      <%= f.label :指定勤務時間 %>
+      <%= f.time_field :pointing_work_time, class: 'form-control' %>
+
+      <%= f.label :基本勤務時間 %>
+      <%= f.time_field :basic_work_time, class: 'form-control'%>
+      
+      <%= f.submit "更新", class: "btn btn-primary" %>
+<% end %>

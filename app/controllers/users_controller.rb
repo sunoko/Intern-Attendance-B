@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
+  def ba_info_edit
+    
+  end
+
   def work
     if params[:flag] == "arrival_flag" #出勤ボタンを押下
         # start_today = Time.zone.today.beginning_of_day
