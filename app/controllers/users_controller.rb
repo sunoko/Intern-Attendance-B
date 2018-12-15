@@ -6,12 +6,12 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
   
   def basic_info
-    # redirect_to("/users/basic_info")
+    @user = User.find(current_user.id)
   end
   
   def ba_info_edit
     @user = User.find(current_user.id)
-    if @user.update_attributes(users_basic_params)
+    if @user.update_attributes(user_params)
     # if @user.update_attributes
       # 更新に成功した場合を扱う。
       flash[:success] = "基本情報を修正しました"
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     message = ""
     
     works_params.each do |id, item|
-          attendance = Attendance.find(id)
+          attendance = Attendance.find(@user.id)
           # byebug
           
           #出社時間と退社時間の両方の存在を確認
@@ -152,7 +152,7 @@ class UsersController < ApplicationController
   end
   
   def show
-  @user = User.find(current_user.id)
+  @user = User.find(params[:id])
   @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
@@ -182,8 +182,8 @@ class UsersController < ApplicationController
     
     (@first_day..@last_day).each do |temp_day|
       comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)
-    	if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil?
-    		work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id)
+    	if Attendance.find_by(attendance_date: comparison_date, user_id: params[:id]).nil?
+    		work = Attendance.new(attendance_date: comparison_date, user_id: params[:id])
     		work.save
     	# <!--#既存レコードある場合は、読み込み。-->
     	# else
@@ -200,13 +200,13 @@ class UsersController < ApplicationController
    def create
     @user = User.new(user_params)
     # debugger
-    # if @user.save
+    if @user.save
     #   @user.send_activation_email
     #   flash[:info] = "入力したアドレスに��ールを送信しました。アカウントを有効にしてください"
-    #   redirect_to user_url(@user)
-    # else
+      redirect_to user_url(@user)
+    else
       render 'new'
-    # end
+    end
    end
 
   def edit
@@ -244,10 +244,10 @@ class UsersController < ApplicationController
   end
   
   private
-  　def users_basic_params
-  　 # params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
-  　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
-  　end
+  # 　def users_basic_params
+  # 　 # params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
+  # 　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
+  # 　end
   
     def works_params
        params.permit(attendances: [:arrival, :departure])[:attendances]
@@ -255,7 +255,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :pointing_work_time, :basic_work_time)
     end
     
     # beforeアクション

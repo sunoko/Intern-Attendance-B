@@ -17,7 +17,17 @@
       <%= f.label :password_confirmation, "パスワード確認" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-      <%= f.submit "アカウント作成", class: "btn btn-primary" %>
+      
+      <%# savePointingTime = Time.new(Time.current.year,Time.current.month,Time.current.day,"8:00",00,00) %>
+      <%# @user.pointing_work_time = savePointingTime  %>
+      
+      <%# saveBasicTime = Time.new(Time.current.year,Time.current.month,Time.current.day,"7:50",00,00) %>
+      <%# @user.basic_work_time = saveBasicTime %>
+      <%# f.time_field :pointing_work_time, class: 'form-control' %>
+      <%# f.time_field :basic_work_time, class: 'form-control'%>
+      <center>
+        <%= f.submit "アカウント作成", class: "btn btn-primary" %>
+      </center>
     <% end %>
   </div>
 </div>
