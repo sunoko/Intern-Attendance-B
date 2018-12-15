@@ -6,18 +6,19 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
   
   def basic_info
-    
+    # redirect_to("/users/basic_info")
   end
   
   def ba_info_edit
-    # @user = User.find(current_user.id)
+    @user = User.find(current_user.id)
     # if @user.update_attributes(users_basic_params)
-    #   # 更新に成功した場合を扱う。
-    #   flash[:success] = "基本情報を修正しました"
-    #   redirect_to @user
-    # else
-    #   render 'edit'
-    # end
+    if @user.update_attributes
+      # 更新に成功した場合を扱う。
+      flash[:success] = "基本情報を修正しました"
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
 
   def work
@@ -244,7 +245,8 @@ class UsersController < ApplicationController
   
   private
   # 　def users_basic_params
-  # 　  params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
+  # 　 # params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
+  # 　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
   # 　end
   
     def works_params
