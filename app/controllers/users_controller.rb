@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   
   def ba_info_edit
     @user = User.find(current_user.id)
-    # if @user.update_attributes(users_basic_params)
-    if @user.update_attributes
+    if @user.update_attributes(users_basic_params)
+    # if @user.update_attributes
       # 更新に成功した場合を扱う。
       flash[:success] = "基本情報を修正しました"
       redirect_to @user
@@ -244,10 +244,10 @@ class UsersController < ApplicationController
   end
   
   private
-  # 　def users_basic_params
-  # 　 # params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
-  # 　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
-  # 　end
+  　def users_basic_params
+  　 # params.permit(users: [:pointing_work_time, :basic_work_time])[:users]
+  　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
+  　end
   
     def works_params
        params.permit(attendances: [:arrival, :departure])[:attendances]
