@@ -153,7 +153,7 @@ class UsersController < ApplicationController
   
   def show
   @user = User.find(params[:id])
-  @attendance = Attendance.find_by(user_id: @user.id)
+  # @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
     
@@ -178,7 +178,7 @@ class UsersController < ApplicationController
   @to = Date.current.next_month.beginning_of_month
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
   @attendance = Attendance.where(created_at: @first_day...@to)
-  
+  @attendance = @attendance.find_by(user_id: @user.id)
     
     (@first_day..@last_day).each do |temp_day|
       comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)

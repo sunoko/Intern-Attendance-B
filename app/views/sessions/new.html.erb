@@ -16,10 +16,12 @@
         <%= f.check_box :remember_me %>
         <span>パスワードを覚えさせる</span>
       <% end %>
-
+  <center>
       <%= f.submit "ログイン", class: "btn btn-primary" %>
     <% end %>
 
+  
     <p>初めての方は <%= link_to "新規登録!", signup_path %></p>
+  </center>
   </div>
 </div>
