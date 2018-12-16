@@ -10,9 +10,20 @@
         <%= link_to "→", user_path(piyo: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         
       </td>
-      <td>指定勤務時間 8:00</td>
-      <td colspan="3">7:50 基本時間</td>
+      <% if @user.pointing_work_time.present? %>
+        <td>指定勤務時間  <%= @user.pointing_work_time.hour %>:<%= @user.pointing_work_time.min %></td>
+      <% else %>
+        <td>指定勤務時間 8:00</td>
+      <% end %>
+      
+      <% if @user.pointing_work_time.present? %>
+        <td colspan="3"><%= @user.basic_work_time.hour %>:<%= @user.basic_work_time.min %> 基本時間</td>
+      <% else %>
+        <td colspan="3">7:50 基本時間</td>
+      <% end %>
+            
       <td>初日 <%= @first_day.month %>/<%= @first_day.day %></td>
+      
     </tr>
     <tr align="center">
       <td>所属 <%= @user.affiliation %></td>
@@ -20,7 +31,7 @@
       <td>コード</td>
       <td width="10"></td>
       <td>出勤日数</td>
-      <td>締め <%= @first_day.month %>/<%= @last_day %></td>
+      <td>締め <%= @first_day.month %>/<%= @last_day.day %></td>
     </tr>
     </table> 
 </body>
@@ -52,7 +63,7 @@
               
               
               <td><%# 出勤時間 %>
-                <% if @attendance.arrival.present? %> <%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+              <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
                   <% @attendance.each do |value| %>
                     <% if value.arrival.present? %>
                       <%= value.arrival.hour if value.attendance_date == temp_day %>
@@ -62,7 +73,7 @@
               </td>
 
               <td><%# 出勤分 %>
-                <% if @attendance.arrival.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+                <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
                   <% @attendance.each do |value| %>
                     <% if value.arrival.present? %>
                       <%= value.arrival.min if value.attendance_date == temp_day %>
@@ -74,7 +85,7 @@
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
                 <% if Date.current ==  temp_day %>
                   <%# if @attendance.present?    %>
-                    <% if @attendance.find_by(attendance_date: temp_day, user_id: current_user.id).arrival == nil %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
+                    <% if @attendance.find_by(attendance_date: temp_day, user_id: @user.id).arrival == nil %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                       <%= link_to "出 勤", work_path(id: @user.id, flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
                     <% elsif @attendance.find_by(attendance_date: temp_day, user_id: current_user.id).departure == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>
                       <%= link_to "退 勤", work_path(id: @user.id, flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
@@ -86,7 +97,7 @@
               </td>
               
               <td><%# 退勤時間 %>
-                <% if @attendance.departure.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+                <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
                   <% @attendance.each do |value| %>
                     <% if value.departure.present? %>
                       <%= value.departure.hour if value.attendance_date == temp_day %>
@@ -96,7 +107,7 @@
               </td>
               
               <td><%# 退勤分 %>
-                <% if @attendance.departure.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+                <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
                   <% @attendance.each do |value| %>
                     <% if value.departure.present? %>
                       <%= value.departure.min if value.attendance_date == temp_day %>
@@ -106,7 +117,7 @@
               </td>
               <td width="10"></td>
               <td><%# 滞在時間 %>
-                <% if @attendance.arrival.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+                <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
                   <% @attendance.each do |value| %>
                     <% departure_time = value.departure %>
                     <% arrival_time = value.arrival %>
@@ -123,7 +134,7 @@
         <td align="center" height="50" colspan="6"></td>
         <td align="center" height="50"><%# 滞在時間合計 %>
         <% total = 0 %>
-         <% if @attendance.arrival.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
+         <% if @attendance.present? %><%# 新規ユーザーの場合はデータが存在しないからエラーになる %>
             <% @attendance.each do |value| %>
               <% departure_time = value[:departure] %>
               <% arrival_time = value[:arrival] %>

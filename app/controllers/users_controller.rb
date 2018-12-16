@@ -177,13 +177,12 @@ class UsersController < ApplicationController
   # @to = Date.today.next_month.beginning_of_month
   @to = Date.current.next_month.beginning_of_month
   #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
-  @attendance = Attendance.where(created_at: @first_day...@to)
-  @attendance = @attendance.find_by(user_id: @user.id)
-    
+  @attendance = Attendance.where(created_at: @first_day...@to, user_id: @user.id)
+  # @attendance = @attendance.find_by(user_id: @user.id)
     (@first_day..@last_day).each do |temp_day|
       comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)
-    	if Attendance.find_by(attendance_date: comparison_date, user_id: params[:id]).nil?
-    		work = Attendance.new(attendance_date: comparison_date, user_id: params[:id])
+    	if Attendance.find_by(attendance_date: comparison_date, user_id: @user.id).nil?
+    		work = Attendance.new(attendance_date: comparison_date, user_id: @user.id)
     		work.save
     	# <!--#既存レコードある場合は、読み込み。-->
     	# else
