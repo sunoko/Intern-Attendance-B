@@ -59,7 +59,8 @@ class UsersController < ApplicationController
         end
       flash[:success] = '今日も１日お疲れ様でした。'
       end
-        redirect_to '/users/show'
+    redirect_to '/users/show'
+    # redirect_to @user
   end
   
   def attend_update
@@ -152,7 +153,8 @@ class UsersController < ApplicationController
   end
   
   def show
-  @user = User.find(params[:id])
+  # @user = User.find(current_user.id)
+  @user = User.find_by(id: params[:id])
   # @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
