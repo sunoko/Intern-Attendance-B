@@ -4,15 +4,16 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "トップへ", root_path %></li>
-        <!--<li><= link_to "ヘルプ", help_path %></li>-->
         <% if logged_in? %>
-          <!--<li><%= link_to "リンク", "/link" %></li>-->
-          <!--<li><%= link_to "ユーザー", users_path %></li>-->
+          <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% if current_user.admin? %>
+            <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% end %>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color:#65baad">
+            <a class="dropdown-toggle" data-toggle="dropdown" >
               アカウント <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu" style="background-color:#65baad">
+            <ul class="dropdown-menu" >
               <li><%= link_to "プロフィール更新", edit_user_path(current_user) %></li>
               <li><%= link_to "基本情報更新", basic_info_path(current_user) %></li>
               <li class="divider"></li>

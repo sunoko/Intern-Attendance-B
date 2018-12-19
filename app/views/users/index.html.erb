@@ -1,13 +1,19 @@
 <% provide(:title, '全てのユーザー') %>
-<% provide(:search_name, 'ユーザー検索') %>
-<% provide(:path, users_path) %>
+<!--<# provide(:search_name, 'ユーザー検索') %>-->
+<!--<%# provide(:path, users_path) %>-->
 <h1>全てのユーザー</h1>
 
 <%= will_paginate %>
 
 <ul class="users">
-  <%= render 'users/search' %> 
-  <%= render @users %>
+  <% @users.each do |user| %>
+    <%= render user %>
+  <% end %>
 </ul>
+
+<!--<ul class="users">-->
+<!--  <%#= render 'users/search' %> -->
+<!--  <%#= render @users %>-->
+<!--</ul>-->
 
 <%= will_paginate %>

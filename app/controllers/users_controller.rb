@@ -149,7 +149,8 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.where(activated: true).paginate(page: params[:page]).search(params[:search])
+    # @users = User.paginate(page: params[:page])
+    @users = User.all.paginate(page: params[:page])
   end
   
   def show
