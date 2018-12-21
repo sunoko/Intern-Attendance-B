@@ -12,7 +12,6 @@ class UsersController < ApplicationController
   def ba_info_edit
     @user = User.find(current_user.id)
     if @user.update_attributes(user_params)
-    # if @user.update_attributes
       # 更新に成功した場合を扱う。
       flash[:success] = "基本情報を修正しました"
       redirect_to @user
@@ -23,12 +22,6 @@ class UsersController < ApplicationController
 
   def work
     if params[:flag] == "arrival_flag" #出勤ボタンを押下
-        # start_today = Time.zone.today.beginning_of_day
-        #   end_today = Time.zone.today.end_of_day      
-  
-        # @update_id = Attendance.where(arrival: start_today..end_today)
-        # if @update_id[1] == nil
-        # byebug
           savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
           date = Date.current
           # byebug
@@ -44,23 +37,16 @@ class UsersController < ApplicationController
     end
       
       if params[:flag] == "departure_flag" #退勤ボタンを押下
-      #   start_today = Time.zone.today.beginning_of_day
-      #     end_today = Time.zone.today.end_of_day      
-      # #退勤時イベントでの上書きするAttendanceのidカラムを取得
-      #   @update_id = Attendance.where(arrival: start_today...end_today)
-      #   # byebug
         savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
         date = Date.current
         save = Attendance.find_by(attendance_date: date, user_id: params[:id])
         if save.present?
-          # savetime = Time.new(Time.current.year,Time.current.month,Time.current.day,Time.current.hour,Time.current.min,00)
           save.update(departure: savetime)
           params[:flag] == "" #フラグが内部保持されてしまうのでリセット → リセットしないと画面更新すると退勤イベントが反応してしまう為
         end
       flash[:success] = '今日も１日お疲れ様でした。'
       end
     redirect_to '/users/show'
-    # redirect_to @user
   end
   
   def attend_update
@@ -70,7 +56,6 @@ class UsersController < ApplicationController
     
     works_params.each do |id, item|
           attendance = Attendance.find(@user.id)
-          # byebug
           
           #出社時間と退社時間の両方の存在を確認
           if item["arrival"].blank? && item["departure"].blank?
@@ -99,7 +84,6 @@ class UsersController < ApplicationController
           
           else
             attendance.update_attributes(item)
-            # attendance.update_attributes(id,item)
             flash[:success] = '勤怠時間を更新しました。'
           end
       end #eachの締め
@@ -126,40 +110,18 @@ class UsersController < ApplicationController
       end
     # ▼月末(30or31日, 23:59:59)を取得します
     @last_day = @first_day.end_of_month
-    #byebug
-    # 次月の初日未満（初日は含まない）
-    # https://h3poteto.hatenablog.com/entry/2013/12/08/140934
-    # @to = Date.today.next_month.beginning_of_month
     @to = DateTime.current.next_month.beginning_of_month
-    #特定idデータにおける一ヶ月分（必要な分だけのデータ）の出退勤情報を抽出　←　全部の勤怠データを渡してしまうと時間経過とともにデータが肥大化してしまうから。
-    #@attendance = Attendance.where(created_at: @first_day...@to)
-    
-    # (@first_day..@last_day).each do |date|
-    #   comparison_date = Time.new(Time.current.year,Time.current.month,temp_day)
-    #   range = comparison_date.beginning_of_day..comparison_date.end_of_day
-    #   #既存レコード無い場合は、Workモデル新規生成。
-  		# if Attendance.find_by(attendance_date: range, user_id: current_user.id).nil?
-  		# 	work = Attendance.new(attendance_date: range, userid: current_user.id)
-  		# 	work.save
-  		# #既存レコードある場合は、読み込み。
-  		# else
-  		# 	work = Attendance.find_by(attendance_date: range, userid: current_user.id)
-  		# end
-		# end
   end
   
   def index
-    # @users = User.paginate(page: params[:page])
     @users = User.all.paginate(page: params[:page])
   end
   
   def show
-  # @user = User.find(current_user.id)
   @user = User.find_by(id: params[:id])
   if @user == nil
     @user = User.find(current_user.id)
   end
-  # @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
     
@@ -190,9 +152,6 @@ class UsersController < ApplicationController
     	if Attendance.find_by(attendance_date: comparison_date, user_id: @user.id).nil?
     		work = Attendance.new(attendance_date: comparison_date, user_id: @user.id)
     		work.save
-    	# <!--#既存レコードある場合は、読み込み。-->
-    	# else
-    	# 	work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id)
     	end
   	end
   end
