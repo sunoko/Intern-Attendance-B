@@ -156,6 +156,9 @@ class UsersController < ApplicationController
   def show
   # @user = User.find(current_user.id)
   @user = User.find_by(id: params[:id])
+  if @user == nil
+    @user = User.find(current_user.id)
+  end
   # @attendance = Attendance.find_by(user_id: @user.id)
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
