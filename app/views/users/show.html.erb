@@ -58,8 +58,6 @@
       <tr align="center">
         <td>時</td><td>分</td><td width="130"></td><td>時</td><td>分</td><td width="10"></td>
       </tr>
-
-        <%# youbi = %w[日 月 火 水 木 金 土] %>
         <% (@first_day..@last_day).each do |temp_day| %>
             <tr align="center" height="50">
               <td><%= temp_day.month %>/<%= temp_day.day %></td>
@@ -88,7 +86,6 @@
               <td width="130">
                 <%# 今日の年月日だったらボタン表示。年まで条件付けしないと前年や来年等の同月日にボタンが描画されてしまう為。 %>
                 <% if Date.current ==  temp_day %>
-                  <%# if @attendance.present?    %>
                     <% if @attendance.find_by(attendance_date: temp_day, user_id: @user.id).arrival == nil %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                       <%= link_to "出 勤", work_path(id: @user.id, flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
                     <% elsif @attendance.find_by(attendance_date: temp_day, user_id: current_user.id).departure == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>

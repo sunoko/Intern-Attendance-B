@@ -16,8 +16,6 @@ Rails.application.routes.draw do
   get    'basic_info'    => 'users#basic_info'
   patch  'ba_info_edit'  => 'users#ba_info_edit'
   
-  # get '/users/:id/:update_id/:departure_flag' => 'users#show'
-  
   resources :users do
     member do
       get :following, :followers
