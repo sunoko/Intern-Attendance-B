@@ -11,22 +11,26 @@
         
       </td>
       <% if @user.pointing_work_time.present? %>
-        <td>指定勤務時間  <%= @user.pointing_work_time.hour %>:<%= @user.pointing_work_time.min %></td>
+        <td>指定勤務時間  <%= @PWK %></td>
       <% else %>
-        <td>指定勤務時間 8:00</td>
+        <td>指定勤務時間 08 : 00</td>
       <% end %>
       
       <% if @user.pointing_work_time.present? %>
-        <td colspan="3"><%= @user.basic_work_time.hour %>:<%= @user.basic_work_time.min %> 基本時間</td>
+        <td colspan="3"><%= @Btime %> 基本時間</td>
       <% else %>
-        <td colspan="3">7:50 基本時間</td>
+        <td colspan="3">07 : 50 基本時間</td>
       <% end %>
             
       <td>初日 <%= @first_day.month %>/<%= @first_day.day %></td>
       
     </tr>
     <tr align="center">
-      <td>所属 <%= @user.affiliation %></td>
+      <% if @user.affiliation.present? %>
+        <td>所属 <%= @user.affiliation %></td>
+      <% else %>
+        <td>所属 <%=  %></td>
+      <% end %>
       <td>氏名 <%= @user.name %></td>
       <td>コード</td>
       <td width="10"></td>

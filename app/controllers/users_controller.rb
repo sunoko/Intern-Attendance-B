@@ -195,6 +195,11 @@ class UsersController < ApplicationController
     	# 	work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id)
     	end
   	end
+	@PWK = @user.pointing_work_time.strftime("%H : %M")
+	@Btime = @user.basic_work_time.strftime("%H : %M")
+	
+# 	@ArriH = @attendance.arrival.strftime("%H")
+  
   end
   
   def new
@@ -254,12 +259,12 @@ class UsersController < ApplicationController
   # 　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
   # 　end
   
-    def works_params
-       params.permit(attendances: [:arrival, :departure])[:attendances]
-    end
+    # def works_params
+    #   params.permit(attendances: [:arrival, :departure])[:attendances]
+    # end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password,
+      params.require(:user).permit(:name, :email, :password, :affiliation,
                                    :password_confirmation, :pointing_work_time, :basic_work_time)
     end
     
