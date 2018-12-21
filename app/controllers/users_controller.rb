@@ -151,6 +151,11 @@ class UsersController < ApplicationController
   def index
     # @users = User.paginate(page: params[:page])
     @users = User.all.paginate(page: params[:page])
+    
+    @user = User.find_by(id: params[:id])
+    if @user == nil
+      @user = User.find(current_user.id)
+    end
   end
   
   def show
@@ -195,8 +200,8 @@ class UsersController < ApplicationController
     	# 	work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id)
     	end
   	end
-	@PWK = @user.pointing_work_time.strftime("%H : %M")
-	@Btime = @user.basic_work_time.strftime("%H : %M")
+	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
+	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present?
 	
 # 	@ArriH = @attendance.arrival.strftime("%H")
   
