@@ -154,6 +154,9 @@ class UsersController < ApplicationController
     		work.save
     	end
   	end
+  	
+	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
+	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present?  	
   end
   
   def new
