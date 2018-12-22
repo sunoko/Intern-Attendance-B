@@ -6,6 +6,9 @@ class StaticPagesController < ApplicationController
       # 検索拡張機能として.search(params[:search])を追加 
       @feed_items = current_user.feed.paginate(page: params[:page]).search(params[:search])
       @user = User.find(current_user.id)
+      if @user == nil
+        @user = User.find(current_user.id)
+      end
       redirect_to @user
     end
   end

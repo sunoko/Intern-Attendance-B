@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     message = ""
     
     works_params.each do |id, item|
-          attendance = Attendance.find(@user.id)
+          attendance = Attendance.find(current_user.id)
           
           #出社時間と退社時間の両方の存在を確認
           if item["arrival"].blank? && item["departure"].blank?
@@ -175,6 +175,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+      if @user == nil
+        @user = User.find(current_user.id)
+      end
   end
 
   def update
