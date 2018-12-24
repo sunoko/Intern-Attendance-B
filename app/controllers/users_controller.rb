@@ -170,6 +170,7 @@ class UsersController < ApplicationController
     if @user.save
     #   @user.send_activation_email
     #   flash[:info] = "入力したアドレスに��ールを送信しました。アカウントを有効にしてください"
+      # render '/layouts/_header'
       redirect_to user_url(@user)
     else
       render 'new'
