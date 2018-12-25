@@ -4,7 +4,7 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "トップへ", root_path %></li>
-        <% if logged_in? || @user.present? %>
+        <% if logged_in? %>
             <li><%= link_to "基本情報更新", basic_info_path(current_user) %></li>
                 <% if @user.present? && @user.name == "admin" %>
                   <li><%= link_to "ユーザー一覧", users_path %></li>

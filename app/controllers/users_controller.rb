@@ -96,21 +96,12 @@ class UsersController < ApplicationController
     @attendance = Attendance.find_by(user_id: @user.id)
     @y_m_d = Date.current
     @youbi = %w[日 月 火 水 木 金 土]    
-      if params[:piyo] == nil
-         # params[:piyo]が存在しない(つまりデフォルト時)
-         # ▼月初(今月の1日, 00:00:00)を取得します
-         @first_day = Date.new(Date.today.year, Date.today.month)
-      else
-         # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
-         #  paramsの中身は"文字列"で送られてくるので注意
-         #  文字列を時間の型に直すときはparseメソッドを使うか、
-        # @first_day = Time.parse(params[:piyo])
-         #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
-         @first_day = params[:piyo].to_date
-      end
+
+    @first_day = params[:first_day].to_date
     # ▼月末(30or31日, 23:59:59)を取得します
     @last_day = @first_day.end_of_month
     @to = DateTime.current.next_month.beginning_of_month
+    @attendance = Attendance.where(created_at: @first_day...@to, user_id: @user.id)
   end
   
   def index
