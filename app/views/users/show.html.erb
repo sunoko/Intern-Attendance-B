@@ -34,7 +34,7 @@
       <td>氏名 <%= @user.name %></td>
       <td>コード</td>
       <td width="10"></td>
-      <td>出勤日数</td>
+      <td>出勤日数<%= @attendance_sum if @attendance_sum.present? %></td>
       <td>締め <%= @first_day.month %>/<%= @last_day.day %></td>
     </tr>
     </table> 

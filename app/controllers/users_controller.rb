@@ -147,7 +147,27 @@ class UsersController < ApplicationController
   	end
   	
 	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
-	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present?  	
+	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present? 
+	
+  # 当月を昇順で取得し@daysへ代入
+  @days = @user.attendances.where('attendance_date >= ? and attendance_date <= ?', @first_day, @last_day).order('attendance_date')
+  
+  if @days.present?
+    @total_time = 0
+  else
+    i = 0
+    @days.each do |d|
+      if d.arrival.present? && d.departure.present?
+        second = 0
+        second = times(d.arrival,d.departure)
+        @total_time = @total_time.to_i + second.to_i
+        i = i + 1
+      end
+    end
+  end
+    
+  #出勤日数表示
+  @attendance_sum = @days.where.not(arrival: nil, departure: nil).count
   end
   
   def new
