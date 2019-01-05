@@ -36,12 +36,13 @@
           <td><input type="text" name="指示者" size="4" maxlength="20" ></td>
         </tr>
       <% end %> <%# each doループのend %>
+	  <% end %> <%# form_forのend %>
       </table>
       <br><br><br>
       <center>
         <%= link_to "キャンセル", 'users/current_user.id', style:"color:white", class: "btn btn-primary" %>
         <%= f.submit "編集を保存する", class: "btn btn-primary" %>
       </center>
-	  <% end %> <%# form_forのend %>
+
   </body>
 </html>    
