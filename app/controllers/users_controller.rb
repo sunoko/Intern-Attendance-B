@@ -100,7 +100,7 @@ class UsersController < ApplicationController
     @first_day = params[:first_day].to_date
     # ▼月末(30or31日, 23:59:59)を取得します
     @last_day = @first_day.end_of_month
-    @to = DateTime.current.next_month.beginning_of_month
+    # @to = DateTime.current.next_month.beginning_of_month
     # @attendance = Attendance.where(created_at: @first_day...@last_day, user_id: @user.id)
   end
   
@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   @y_m_d = Date.current
   @youbi = %w[日 月 火 水 木 金 土]
     
-    if params[:piyo] == nil
+    if params[:first_day] == nil
        # params[:piyo]が存在しない(つまりデフォルト時)
        # ▼月初(今月の1日, 00:00:00)を取得します
        @first_day = Date.new(Date.today.year, Date.today.month)
@@ -126,7 +126,7 @@ class UsersController < ApplicationController
        #  文字列を時間の型に直すときはparseメソッドを使うか、
       # @first_day = Time.parse(params[:piyo])
        #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
-       @first_day = params[:piyo].to_date
+       @first_day = params[:first_day].to_date
     end
   # ▼月末(30or31日, 23:59:59)を取得します
   @last_day = @first_day.end_of_month

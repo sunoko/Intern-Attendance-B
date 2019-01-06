@@ -5,9 +5,9 @@
  <table border="1" width="1200">
     <tr align="center">
       <td height="45">
-        <%= link_to "←", user_path(piyo: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>   
+        <%= link_to "←", user_path(first_day: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>   
            <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表   
-        <%= link_to "→", user_path(piyo: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
+        <%= link_to "→", user_path(first_day: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         
       </td>
       <% if @user.pointing_work_time.present? %>
