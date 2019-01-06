@@ -93,21 +93,11 @@ class UsersController < ApplicationController
   
   def attend_edit
     @user = User.find(current_user.id)
-    @attendance = Attendance.find_by(user_id: @user.id)
+    # @attendance = Attendance.find_by(user_id: @user.id)
     @y_m_d = Date.current
     @youbi = %w[日 月 火 水 木 金 土]    
-      if params[:piyo] == nil
-         # params[:piyo]が存在しない(つまりデフォルト時)
-         # ▼月初(今月の1日, 00:00:00)を取得します
-         @first_day = Date.new(Date.today.year, Date.today.month)
-      else
-         # ▼params[:piyo]が存在する(つまり切り替えボタン押下時)
-         #  paramsの中身は"文字列"で送られてくるので注意
-         #  文字列を時間の型に直すときはparseメソッドを使うか、
-        # @first_day = Time.parse(params[:piyo])
-         #  もしくはto_datetimeメソッドとかで型を変えてあげるといいと思います
-         @first_day = params[:piyo].to_date
-      end
+
+    @first_day = params[:first_day].to_date
     # ▼月末(30or31日, 23:59:59)を取得します
     @last_day = @first_day.end_of_month
     @to = DateTime.current.next_month.beginning_of_month
@@ -156,7 +146,69 @@ class UsersController < ApplicationController
   	end
   	
 	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
+<<<<<<<<< saved version
+    (@first_day..@last_day).each do |temp_day|
+      comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)
+    	if Attendance.find_by(attendance_date: comparison_date, user_id: @user.id).nil?
+    		work = Attendance.new(attendance_date: comparison_date, user_id: @user.id)
+    		work.save
+    	end
+  	end
+  	
+	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
 	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present?  	
+=========
+  # @attendance = @attendance.find_by(user_id: @user.id)
+    (@first_day..@last_day).each do |temp_day|
+      comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day)
+    	if Attendance.find_by(attendance_date: comparison_date, user_id: @user.id).nil?
+    		work = Attendance.new(attendance_date: comparison_date, user_id: @user.id)
+    		work.save
+    	end
+  	end
+  	
+	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
+<<<<<<<<< saved version
+    @days.each do |d|
+      if d.arrival.present? && d.departure.present?
+        second = 0
+        second = times(d.arrival,d.departure)
+        @total_time = @total_time.to_i + second.to_i
+        i = i + 1
+      end
+    end
+  end
+    
+  #出勤日数表示
+  @attendance_sum = @days.where.not(arrival: nil, departure: nil).count
+=========
+	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present?  	
+=========
+	@PWK = @user.pointing_work_time.strftime("%H : %M") if @user.pointing_work_time.present?
+	@Btime = @user.basic_work_time.strftime("%H : %M") if @user.basic_work_time.present? 
+	
+  # 当月を昇順で取得し@daysへ代入
+  @days = @user.attendances.where('attendance_date >= ? and attendance_date <= ?', @first_day, @last_day).order('attendance_date')
+  
+  if @days.present?
+    @total_time = 0
+  else
+    i = 0
+    @days.each do |d|
+      if d.arrival.present? && d.departure.present?
+        second = 0
+        second = times(d.arrival,d.departure)
+        @total_time = @total_time.to_i + second.to_i
+        i = i + 1
+      end
+    end
+  end
+    
+  #出勤日数表示
+  @attendance_sum = @days.where.not(arrival: nil, departure: nil).count
+>>>>>>>>> local version
+>>>>>>>>> local version
+>>>>>>>>> local version
   end
   
   def new
