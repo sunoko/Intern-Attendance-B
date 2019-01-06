@@ -18,7 +18,7 @@
           <td><%= @first_day.month %>/<%= temp_day.day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day.day) .wday] %></td>
           <!--#既存レコード無い場合は、Workモデル新規生成。-->
-          <% comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
+          <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
   				<%# if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
   					<%# work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
   					<%# work.save %>
