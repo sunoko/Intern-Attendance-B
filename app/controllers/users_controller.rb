@@ -101,7 +101,7 @@ class UsersController < ApplicationController
     # ▼月末(30or31日, 23:59:59)を取得します
     @last_day = @first_day.end_of_month
     @to = DateTime.current.next_month.beginning_of_month
-    @attendance = Attendance.where(created_at: @first_day...@last_day, user_id: @user.id)
+    # @attendance = Attendance.where(created_at: @first_day...@last_day, user_id: @user.id)
   end
   
   def index
