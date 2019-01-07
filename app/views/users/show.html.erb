@@ -5,9 +5,9 @@
  <table border="1" width="1200">
     <tr align="center">
       <td height="45">
-        <%= link_to "←", user_path(piyo: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>   
+        <%= link_to "←", user_path(first_day: @first_day.prev_month),style:"color:white", class: 'btn btn-default btn-primary' %>   
            <%= @first_day.year %>年<%= @first_day.month %>月の時間管理表   
-        <%= link_to "→", user_path(piyo: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
+        <%= link_to "→", user_path(first_day: @first_day.next_month),style:"color:white", class: 'btn btn-default btn-primary' %>
         
       </td>
       <% if @user.pointing_work_time.present? %>
@@ -34,7 +34,7 @@
       <td>氏名 <%= @user.name %></td>
       <td>コード</td>
       <td width="10"></td>
-      <td>出勤日数</td>
+      <td>出勤日数<%= @attendance_sum if @attendance_sum.present? %></td>
       <td>締め <%= @first_day.month %>/<%= @last_day.day %></td>
     </tr>
     </table> 
@@ -42,7 +42,8 @@
 　
 　<br><br><br>
 　
-　<body><%= link_to "勤怠を編集", attend_edit_path(@user, @first_day, @last_day, @youbi), style:"color:white", class: 'btn btn-default btn-primary' %>
+　<body>
+　  <%= link_to "勤怠を編集", attend_edit_path(first_day: @first_day), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -50,9 +51,9 @@
         <td colspan="3">出社</td>
         <td colspan="3">退社</td>
         <td rowspan="2">滞在時間</td>
-        <td rowspan="2">備考</td>
-        <td rowspan="2">残業指示</td>
-        <td rowspan="2">残業指示者</td>
+        <td rowspan="2" colspan="3" >備考</td>
+        <!--<td rowspan="2">残業指示</td>-->
+        <!--<td rowspan="2">残業指示者</td>-->
       </tr>
       
       <tr align="center">
@@ -93,7 +94,6 @@
                     <% else %>
                       <%# 退勤ボタンを押下済みならボタンは非表示 %>
                     <% end %>
-                  <%# end %>
                 <% end %>
               </td>
               
@@ -128,7 +128,9 @@
                   <% end %>
                 <% end %>
               </td>
-              <td></td><td></td><td></td>
+              <td colspan="3" ></td>
+              <!--<td></td>-->
+              <!--<td></td>-->
             </tr>
         <% end %>
         <td align="center" height="50" colspan="2"><%= 0.00 %></td>
@@ -147,8 +149,8 @@
         <% end %>
           <%= total.round(2) if  @first_day.year == @y_m_d.year && @first_day.month == @y_m_d.month %>
         </td>
-        <td align="center" height="50"></td>
-        <td align="center" height="50"></td>
+        <!--<td align="center" height="50"></td>-->
+        <!--<td align="center" height="50"></td>-->
         <td align="center" height="50">所属長承認</td>
     </table> 
   </body>

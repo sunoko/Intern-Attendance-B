@@ -15,8 +15,9 @@
     <%= form_for @user, :url => {:action => 'attend_update'}, method: "patch" do |f| %>
       <% (@first_day..@last_day).each do |temp_day| %>
         <tr align="center" valign="top" font-size= 20pt height="100">
-          <td><%= @first_day.month %>/<%= temp_day.day %></td>
+          <td><%= @first_day.to_date.month %>/<%= temp_day.day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day.day) .wday] %></td>
+<<<<<<< HEAD
           <!--#既存レコード無い場合は、Workモデル新規生成。-->
           <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
   				<%# if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
@@ -26,6 +27,11 @@
   				<%# else %>
   					<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
   				<%# end %>
+=======
+          <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
+          <%# comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
+  				<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
+>>>>>>> retouching
           <td width="50">
     				<%= fields_for "attendances[]", work do |fi| %>
     					<%= fi.time_field :arrival, class: 'form-control' %>
@@ -42,6 +48,7 @@
           <td><input type="text" name="指示者" size="4" maxlength="20" ></td>
         </tr>
       <% end %> <%# each doループのend %>
+
       </table>
       <br><br><br>
       <center>
