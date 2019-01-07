@@ -46,7 +46,7 @@ class UsersController < ApplicationController
         end
       flash[:success] = '今日も１日お疲れ様でした。'
       end
-    redirect_to '/users/show'
+    redirect_to user_path(params[:id])
   end
   
   def attend_update
