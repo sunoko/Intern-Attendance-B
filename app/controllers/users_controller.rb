@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   end
   
   def attend_update
-    @user = User.find_by(id: params[:id])
+    @user = User.find(current_user.id)
     error_count = 0
     message = ""
     
