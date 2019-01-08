@@ -46,7 +46,7 @@ class UsersController < ApplicationController
         end
       flash[:success] = '今日も１日お疲れ様でした。'
       end
-    redirect_to '/users/show'
+    redirect_to user_path(params[:id])
   end
   
   def attend_update
@@ -92,7 +92,7 @@ class UsersController < ApplicationController
   end
   
   def attend_edit
-    @user = User.find(current_user.id)
+    @user = User.find(params[:id])
     # @attendance = Attendance.find_by(user_id: @user.id)
     @y_m_d = Date.current
     @youbi = %w[日 月 火 水 木 金 土]    
@@ -179,9 +179,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     # debugger
     if @user.save
+      session[:user_id] = @user.id
     #   @user.send_activation_email
     #   flash[:info] = "入力したアドレスに��ールを送信しました。アカウントを有効にしてください"
-      # render '/layouts/_header'
       redirect_to user_url(@user)
     else
       render 'new'
