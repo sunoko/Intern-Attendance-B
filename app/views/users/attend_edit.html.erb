@@ -17,33 +17,8 @@
         <tr align="center" valign="top" font-size= 20pt height="100">
           <td><%= @first_day.to_date.month %>/<%= temp_day.day %></td>
           <td><%= @youbi [@first_day.change(day: temp_day.day) .wday] %></td>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <!--#既存レコード無い場合は、Workモデル新規生成。-->
           <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
-  				<%# if Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id).nil? %>
-  					<%# work = Attendance.new(attendance_date: comparison_date, user_id: current_user.id) %> 
-  					<%# work.save %>
-  				<!--#既存レコードある場合は、読み込み。-->
-  				<%# else %>
-  					<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
-  				<%# end %>
-=======
-          <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
-          <%# comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
-  				<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
->>>>>>> retouching
-=======
-          <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
-          <%# comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
-  				<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
->>>>>>> retouching
-=======
-          <% comparison_date = Date.new(@first_day.year,@first_day.month,temp_day.day) %>
-          <%# comparison_date = Date.new(Date.current.year,Date.current.month,temp_day.day) %>
-  				<% work = Attendance.find_by(attendance_date: comparison_date, user_id: current_user.id) %>
->>>>>>> retouching
+  				<% work = Attendance.find_by(attendance_date: comparison_date, user_id: @user.id) %>
           <td width="50">
     				<%= fields_for "attendances[]", work do |fi| %>
     					<%= fi.time_field :arrival, class: 'form-control' %>
