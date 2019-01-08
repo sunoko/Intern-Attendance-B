@@ -2,7 +2,11 @@ module SessionsHelper
 
   # 渡されたユーザーでログインする
   def log_in(user)
-    session[:user_id] = user.id
+    # if user.id = nil
+    #   session[:user_id] = @user.id
+    # else
+      session[:user_id] = user.id
+    # end
   end
 
   # ユーザーのセッションを永続的にする
@@ -19,7 +23,9 @@ module SessionsHelper
   
   # 現在ログイン中のユーザーを返す (いる場合)
   def current_user
-    if (user_id = session[:user_id])
+    # byebug
+    if (user_id = session[:user_id])       
+      # binding.pry
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
