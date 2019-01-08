@@ -43,7 +43,7 @@
 　<br><br><br>
 　
 　<body>
-　  <%= link_to "勤怠を編集", attend_edit_path(first_day: @first_day), style:"color:white", class: 'btn btn-default btn-primary' %>
+　  <%= link_to "勤怠を編集", attend_edit_path(first_day: @first_day, id: @user.id), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">
         <td rowspan="2">日付</td>
@@ -89,7 +89,7 @@
                 <% if Date.current ==  temp_day %>
                     <% if @attendance.find_by(attendance_date: temp_day, user_id: @user.id).arrival == nil %>  <%# 今日の出勤情報がモデル内に存在しているか判定 %>
                       <%= link_to "出 勤", work_path(id: @user.id, flag: "arrival_flag"), style:"color:white", class: "btn btn-primary" %>
-                    <% elsif @attendance.find_by(attendance_date: temp_day, user_id: current_user.id).departure == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>
+                    <% elsif @attendance.find_by(attendance_date: temp_day, user_id: @user.id).departure == nil %>　<%# 退勤情報がモデル内に存在しているか判定 %>
                       <%= link_to "退 勤", work_path(id: @user.id, flag: "departure_flag"), style:"color:white", class: "btn btn-primary" %>
                     <% else %>
                       <%# 退勤ボタンを押下済みならボタンは非表示 %>
