@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get    'work'          => 'attendances#work'
   get    'basic_info'    => 'attendances#basic_info'
   patch  'ba_info_edit'  => 'attendances#ba_info_edit'
+  # get    '/attendances/attend_edit' => 'users#show'
+  # get    'attend_update' => 'users#show'
   
   resources :users do
     member do
@@ -25,5 +27,5 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :microposts,          only: [:create, :destroy]
   resources :relationships,       only: [:create, :destroy]
-  resources :attendances
+  # resources :attendances
 end

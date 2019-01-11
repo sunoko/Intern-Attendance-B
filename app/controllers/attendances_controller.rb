@@ -82,7 +82,8 @@ class AttendancesController < ApplicationController
           end
       end #eachの締め
     end
-    redirect_to("/attendances/attend_edit")
+    # redirect_to("/attendances/attend_edit")
+    redirect_to url:{:action=>"show", :controller=>"users", :id=>params[:id]}
   end
   
   def attend_edit
@@ -100,6 +101,10 @@ class AttendancesController < ApplicationController
 end
 
   private
+    def works_params
+       params.permit(attendances: [:arrival, :departure])[:attendances]
+    end
+  
     def user_params
       params.require(:user).permit(:name, :email, :password, :affiliation,
                                    :password_confirmation, :pointing_work_time, :basic_work_time)

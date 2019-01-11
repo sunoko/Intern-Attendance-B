@@ -134,9 +134,7 @@ class UsersController < ApplicationController
   # 　 params.require(:user).permit(:pointing_work_time, :basic_work_time)
   # 　end
   
-    def works_params
-       params.permit(attendances: [:arrival, :departure])[:attendances]
-    end
+
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :affiliation,
