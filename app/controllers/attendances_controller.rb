@@ -49,7 +49,7 @@ class AttendancesController < ApplicationController
     message = ""
     
     works_params.each do |id, item|
-          attendance = Attendance.find(current_user.id)
+          attendance = Attendance.find_by(user_id: current_user.id)
           
           #出社時間と退社時間の両方の存在を確認
           if item["arrival"].blank? && item["departure"].blank?
@@ -83,7 +83,7 @@ class AttendancesController < ApplicationController
       end #eachの締め
     end
     # redirect_to("/attendances/attend_edit")
-    redirect_to url:{:action=>"show", :controller=>"users", :id=>params[:id]}
+    redirect_to user_path(current_user.id)
   end
   
   def attend_edit
