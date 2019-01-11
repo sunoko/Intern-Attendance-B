@@ -1,4 +1,4 @@
-<%= form_for(current_user, :url => {:controller => :users, :action => :ba_info_edit}) do |f| %>
+<%= form_for(current_user, :url => {:controller => :attendances, :action => :ba_info_edit}) do |f| %>
 　<%= hidden_field_tag :id, @user.id %>
   <%= render 'shared/error_messages', object: current_user %>
     <h1>基本情報の更新</h1>
