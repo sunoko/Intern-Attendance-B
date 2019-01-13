@@ -83,7 +83,7 @@ class AttendancesController < ApplicationController
       end #eachの締め
     end
     # redirect_to("/attendances/attend_edit")
-    redirect_to user_path(current_user.id)
+    redirect_to user_path(params[:id])
   end
   
   def attend_edit
