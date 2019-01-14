@@ -43,6 +43,7 @@
 　<br><br><br>
 　
 　<body>
+    <%= link_to "基本情報更新", basic_info_path(id: @user.id) %>
 　  <%= link_to "勤怠を編集", attend_edit_path(first_day: @first_day, id: @user.id), style:"color:white", class: 'btn btn-default btn-primary' %>
 　  <table class="s-tbl" border="1" width="1200">
       <tr align="center">

@@ -1,10 +1,10 @@
 class AttendancesController < ApplicationController
   def basic_info
-    @user = User.find(current_user.id)
+    @user = User.find(params[:id])
   end
   
   def ba_info_edit
-    @user = User.find(current_user.id)
+    @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       # 更新に成功した場合を扱う。
       flash[:success] = "基本情報を修正しました"
